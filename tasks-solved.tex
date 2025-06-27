@@ -1,0 +1,551 @@
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\pagestyle{empty}
+\begin{document}
+\section*{Solved tasks}
+\section*{Task 1}
+
+\subsection*{Dot product}
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+1 \cdot 5 + 2 \cdot 4 + 3 \cdot 3 + 4 \cdot 2 + 5 \cdot 1 = 35
+\]
+\[
+\begin{pmatrix}1 \\ 2 \\ 3 \\ 4 \\ 5\end{pmatrix} \cdot \begin{pmatrix}5 \\ 4 \\ 3 \\ 2 \\ 1\end{pmatrix} = 35
+\]
+\vspace{1em}
+\hrule
+\vspace{1em}
+\section*{Task 2}
+
+\subsection*{3D cross product}
+\subsection*{ \vspace{1em} Cross product formula}
+\[
+\begin{pmatrix}
+a_y b_z - a_z b_y \\ 
+a_z b_x - a_x b_z \\ 
+a_x b_y - a_y b_x
+\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} X component calculation}
+\[
+2 \cdot 1 - 3 \cdot 2 = -4
+\]
+\subsection*{ \vspace{1em} Y component calculation}
+\[
+3 \cdot 3 - 1 \cdot 1 = 8
+\]
+\subsection*{ \vspace{1em} Z component calculation}
+\[
+1 \cdot 2 - 2 \cdot 3 = -4
+\]
+\[
+\begin{pmatrix}1 \\ 2 \\ 3\end{pmatrix} \times \begin{pmatrix}3 \\ 2 \\ 1\end{pmatrix} = \begin{pmatrix}-4 \\ 8 \\ -4\end{pmatrix}
+\]
+\vspace{1em}
+\hrule
+\vspace{1em}
+\section*{Task 3}
+
+\subsection*{7D cross product}
+\subsection*{ \vspace{1em} 7D Cross Product Formula}
+\[
+\begin{pmatrix}
+        a_1b_3 - a_3b_1 + a_2b_6 - a_6b_2 + a_4b_5 - a_5b_4 \\
+        a_2b_4 - a_4b_2 + a_3b_0 - a_0b_3 + a_5b_6 - a_6b_5 \\
+        a_3b_5 - a_5b_3 + a_4b_1 - a_1b_4 + a_6b_0 - a_0b_6 \\
+        a_4b_6 - a_6b_4 + a_5b_2 - a_2b_5 + a_0b_1 - a_1b_0 \\
+        a_5b_0 - a_0b_5 + a_6b_3 - a_3b_6 + a_1b_2 - a_2b_1 \\
+        a_6b_1 - a_1b_6 + a_0b_4 - a_4b_0 + a_2b_3 - a_3b_2 \\
+        a_0b_2 - a_2b_0 + a_1b_5 - a_5b_1 + a_3b_4 - a_4b_3
+        \end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Component 0 Calculation}
+\[
+2 \cdot 4 - 4 \cdot 6 + 3 \cdot 1 - 7 \cdot 5 + 5 \cdot 2 - 6 \cdot 3 = -56
+\]
+\subsection*{ \vspace{1em} Component 1 Calculation}
+\[
+3 \cdot 3 - 5 \cdot 5 + 4 \cdot 7 - 1 \cdot 4 + 6 \cdot 1 - 7 \cdot 2 = 0
+\]
+\subsection*{ \vspace{1em} Component 2 Calculation}
+\[
+4 \cdot 2 - 6 \cdot 4 + 5 \cdot 6 - 2 \cdot 3 + 7 \cdot 7 - 1 \cdot 1 = 56
+\]
+\subsection*{ \vspace{1em} Component 3 Calculation}
+\[
+5 \cdot 1 - 7 \cdot 3 + 6 \cdot 5 - 3 \cdot 2 + 1 \cdot 6 - 2 \cdot 7 = 0
+\]
+\subsection*{ \vspace{1em} Component 4 Calculation}
+\[
+6 \cdot 7 - 1 \cdot 2 + 7 \cdot 4 - 4 \cdot 1 + 2 \cdot 5 - 3 \cdot 6 = 56
+\]
+\subsection*{ \vspace{1em} Component 5 Calculation}
+\[
+7 \cdot 6 - 2 \cdot 1 + 1 \cdot 3 - 5 \cdot 7 + 3 \cdot 4 - 4 \cdot 5 = 0
+\]
+\subsection*{ \vspace{1em} Component 6 Calculation}
+\[
+1 \cdot 5 - 3 \cdot 7 + 2 \cdot 2 - 6 \cdot 6 + 4 \cdot 3 - 5 \cdot 4 = -56
+\]
+\[
+\begin{pmatrix}1 \\ 2 \\ 3 \\ 4 \\ 5 \\ 6 \\ 7\end{pmatrix} \times \begin{pmatrix}7 \\ 6 \\ 5 \\ 4 \\ 3 \\ 2 \\ 1\end{pmatrix} = \begin{pmatrix}-56 \\ 0 \\ 56 \\ 0 \\ 56 \\ 0 \\ -56\end{pmatrix}
+\]
+\vspace{1em}
+\hrule
+\vspace{1em}
+\section*{Task 4}
+
+\subsection*{3D triple product}
+\subsection*{ \vspace{1em} Triple product formula}
+\[
+(\vec{a} \times \vec{b}) \cdot \vec{c}
+\]
+\subsection*{ \vspace{1em} Cross product formula}
+\[
+\begin{pmatrix}
+a_y b_z - a_z b_y \\ 
+a_z b_x - a_x b_z \\ 
+a_x b_y - a_y b_x
+\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} X component calculation}
+\[
+5 \cdot 155222 - 6 \cdot 8 = 776062
+\]
+\subsection*{ \vspace{1em} Y component calculation}
+\[
+6 \cdot 7 - 4 \cdot 155222 = -620846
+\]
+\subsection*{ \vspace{1em} Z component calculation}
+\[
+4 \cdot 8 - 5 \cdot 7 = -3
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+1 \cdot 776062 + 2 \cdot -620846 + 3 \cdot -3 = -465639
+\]
+\[
+\begin{pmatrix}1 \\ 2 \\ 3\end{pmatrix} \times \begin{pmatrix}4 \\ 5 \\ 6\end{pmatrix} \times \begin{pmatrix}7 \\ 8 \\ 155222\end{pmatrix} = -465639
+\]
+\vspace{1em}
+\hrule
+\vspace{1em}
+\section*{Task 5}
+
+\subsection*{7D triple product}
+\subsection*{ \vspace{1em} Triple product formula (7D)}
+\[
+(\vec{a} \cdot (\vec{b} \times \vec{c}))
+\]
+\subsection*{ \vspace{1em} 7D Cross Product Formula}
+\[
+\begin{pmatrix}
+        a_1b_3 - a_3b_1 + a_2b_6 - a_6b_2 + a_4b_5 - a_5b_4 \\
+        a_2b_4 - a_4b_2 + a_3b_0 - a_0b_3 + a_5b_6 - a_6b_5 \\
+        a_3b_5 - a_5b_3 + a_4b_1 - a_1b_4 + a_6b_0 - a_0b_6 \\
+        a_4b_6 - a_6b_4 + a_5b_2 - a_2b_5 + a_0b_1 - a_1b_0 \\
+        a_5b_0 - a_0b_5 + a_6b_3 - a_3b_6 + a_1b_2 - a_2b_1 \\
+        a_6b_1 - a_1b_6 + a_0b_4 - a_4b_0 + a_2b_3 - a_3b_2 \\
+        a_0b_2 - a_2b_0 + a_1b_5 - a_5b_1 + a_3b_4 - a_4b_3
+        \end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Component 0 Calculation}
+\[
+9 \cdot 18 - 11 \cdot 16 + 10 \cdot 21 - 14 \cdot 17 + 12 \cdot 20 - 1123124 \cdot 1241215 = -1394038355462
+\]
+\subsection*{ \vspace{1em} Component 1 Calculation}
+\[
+10 \cdot 1241215 - 12 \cdot 17 + 11 \cdot 15 - 8 \cdot 18 + 1123124 \cdot 21 - 14 \cdot 20 = 35997291
+\]
+\subsection*{ \vspace{1em} Component 2 Calculation}
+\[
+11 \cdot 20 - 1123124 \cdot 18 + 12 \cdot 16 - 9 \cdot 1241215 + 14 \cdot 15 - 8 \cdot 21 = -31386713
+\]
+\subsection*{ \vspace{1em} Component 3 Calculation}
+\[
+12 \cdot 21 - 14 \cdot 1241215 + 1123124 \cdot 17 - 10 \cdot 20 + 8 \cdot 16 - 9 \cdot 15 = 1716143
+\]
+\subsection*{ \vspace{1em} Component 4 Calculation}
+\[
+1123124 \cdot 15 - 8 \cdot 20 + 14 \cdot 18 - 11 \cdot 21 + 9 \cdot 17 - 10 \cdot 16 = 16846714
+\]
+\subsection*{ \vspace{1em} Component 5 Calculation}
+\[
+14 \cdot 16 - 9 \cdot 21 + 8 \cdot 1241215 - 12 \cdot 15 + 10 \cdot 18 - 11 \cdot 17 = 9929568
+\]
+\subsection*{ \vspace{1em} Component 6 Calculation}
+\[
+8 \cdot 17 - 10 \cdot 15 + 9 \cdot 20 - 1123124 \cdot 16 + 11 \cdot 1241215 - 12 \cdot 18 = -4316669
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+1 \cdot -1394038355462 + 2 \cdot 35997291 + 3 \cdot -31386713 + 4 \cdot 1716143 + 5 \cdot 16846714 + 6 \cdot 9929568 + 7 \cdot -4316669 = -1393940062152
+\]
+\[
+\begin{pmatrix}1 \\ 2 \\ 3 \\ 4 \\ 5 \\ 6 \\ 7\end{pmatrix} \times \begin{pmatrix}8 \\ 9 \\ 10 \\ 11 \\ 12 \\ 1123124 \\ 14\end{pmatrix} \times \begin{pmatrix}15 \\ 16 \\ 17 \\ 18 \\ 1241215 \\ 20 \\ 21\end{pmatrix} = -1393940062152
+\]
+\vspace{1em}
+\hrule
+\vspace{1em}
+\section*{Task 6}
+
+\subsection*{Vector addition}
+\subsection*{ \vspace{1em} Vector addition formula}
+\[
+(a_1, a_2, \dots, a_n) + (b_1, b_2, \dots, b_n) = (a_1 + b_1, a_2 + b_2, \dots, a_n + b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+1 + 4 = 5
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+2 + 3 = 5
+\]
+\subsection*{ \vspace{1em} Component 3}
+\[
+3 + 2 = 5
+\]
+\subsection*{ \vspace{1em} Component 4}
+\[
+4 + 1 = 5
+\]
+\[
+\begin{pmatrix}1 \\ 2 \\ 3 \\ 4\end{pmatrix} + \begin{pmatrix}4 \\ 3 \\ 2 \\ 1\end{pmatrix} = \begin{pmatrix}5 \\ 5 \\ 5 \\ 5\end{pmatrix}
+\]
+\vspace{1em}
+\hrule
+\vspace{1em}
+\section*{Task 7}
+
+\subsection*{Vector subtraction}
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+10 - 5 = 5
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+20 - 10 = 10
+\]
+\subsection*{ \vspace{1em} Component 3}
+\[
+30 - 15 = 15
+\]
+\[
+\begin{pmatrix}10 \\ 20 \\ 30\end{pmatrix} - \begin{pmatrix}5 \\ 10 \\ 15\end{pmatrix} = \begin{pmatrix}5 \\ 10 \\ 15\end{pmatrix}
+\]
+\vspace{1em}
+\hrule
+\vspace{1em}
+\section*{Task 8}
+
+\subsection*{Scalar multiplication}
+\subsection*{ \vspace{1em} Scalar multiplication formula}
+\[
+\lambda \cdot (a_1, a_2, \dots, a_n) = (\lambda a_1, \lambda a_2, \dots, \lambda a_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+3 \cdot 7 = 21
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+3 \cdot 8 = 24
+\]
+\subsection*{ \vspace{1em} Component 3}
+\[
+3 \cdot 9 = 27
+\]
+\[
+\begin{pmatrix}7 \\ 8 \\ 9\end{pmatrix} \cdot 3 = \begin{pmatrix}21 \\ 24 \\ 27\end{pmatrix}
+\]
+\vspace{1em}
+\hrule
+\vspace{1em}
+\section*{Task 9}
+
+\subsection*{Norm}
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+3 \cdot 3 + 4 \cdot 4 + 12 \cdot 12 = 169
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{169}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{169} = 13.0000000000
+\]
+\[
+\begin{pmatrix}3 \\ 4 \\ 12\end{pmatrix} = \|\vec{v}\| = 13.0000000000
+\]
+\vspace{1em}
+\hrule
+\vspace{1em}
+\section*{Task 10}
+
+\subsection*{Gram-Schmidt orthogonalization}
+\subsection*{ \vspace{1em} Input vectors}
+\[
+\begin{pmatrix}1 \\ 1 \\ 0\end{pmatrix}, \begin{pmatrix}1 \\ 0 \\ 1\end{pmatrix}, \begin{pmatrix}0 \\ 1 \\ 1\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Given set of vectors:}
+\[
+\{ \vec{v}_{1} = \begin{pmatrix}1 \\ 1 \\ 0\end{pmatrix},\ \vec{v}_{2} = \begin{pmatrix}1 \\ 0 \\ 1\end{pmatrix},\ \vec{v}_{3} = \begin{pmatrix}0 \\ 1 \\ 1\end{pmatrix} \}
+\]
+\subsection*{ \vspace{1em} Take vector \(\vec{v}_{1}\):}
+\[
+\begin{pmatrix}1 \\ 1 \\ 0\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+1 \cdot 1 + 1 \cdot 1 + 0 \cdot 0 = 2
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{2}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{2} = 1.4142135623
+\]
+\subsection*{ \vspace{1em} Normalize \(\vec{u}_{1}\) to obtain orthonormal vector:}
+\[
+\begin{pmatrix}0.7071067811 \\ 0.7071067811 \\ 0\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Take vector \(\vec{v}_{2}\):}
+\[
+\begin{pmatrix}1 \\ 0 \\ 1\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+1 \cdot 0.7071067811 + 0 \cdot 0.7071067811 + 1 \cdot 0 = 0.7071067811
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+0.7071067811 \cdot 0.7071067811 + 0.7071067811 \cdot 0.7071067811 + 0 \cdot 0 = 0.9999999999
+\]
+\subsection*{ \vspace{1em} Calculate projection coefficient of \(\vec{v}_{2}\) onto orthonormal vector \(\vec{u}_{1}\):}
+\[
+\frac{\vec{v}_{2} \cdot \vec{u}_{1}}{\vec{u}_{1} \cdot \vec{u}_{1}} = 0.7071067811
+\]
+\subsection*{ \vspace{1em} Scalar multiplication formula}
+\[
+\lambda \cdot (a_1, a_2, \dots, a_n) = (\lambda a_1, \lambda a_2, \dots, \lambda a_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+0.7071067811 \cdot 0.7071067811 = 0.5
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+0.7071067811 \cdot 0.7071067811 = 0.5
+\]
+\subsection*{ \vspace{1em} Component 3}
+\[
+0.7071067811 \cdot 0 = 0
+\]
+\subsection*{ \vspace{1em} Projection vector:}
+\[
+\begin{pmatrix}0.5 \\ 0.5 \\ 0\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+1 - 0.5 = 0.5
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+0 - 0.5 = -0.5
+\]
+\subsection*{ \vspace{1em} Component 3}
+\[
+1 - 0 = 1
+\]
+\subsection*{ \vspace{1em} Subtract projection from \(\vec{u}_{2}\), resulting in:}
+\[
+\begin{pmatrix}0.5 \\ -0.5 \\ 1\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+0.5 \cdot 0.5 + -0.5 \cdot -0.5 + 1 \cdot 1 = 1.5
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{1.5}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{1.5} = 1.2247448713
+\]
+\subsection*{ \vspace{1em} Normalize \(\vec{u}_{2}\) to obtain orthonormal vector:}
+\[
+\begin{pmatrix}0.4082482904 \\ -0.4082482904 \\ 0.8164965809\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Take vector \(\vec{v}_{3}\):}
+\[
+\begin{pmatrix}0 \\ 1 \\ 1\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+0 \cdot 0.7071067811 + 1 \cdot 0.7071067811 + 1 \cdot 0 = 0.7071067811
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+0.7071067811 \cdot 0.7071067811 + 0.7071067811 \cdot 0.7071067811 + 0 \cdot 0 = 0.9999999999
+\]
+\subsection*{ \vspace{1em} Calculate projection coefficient of \(\vec{v}_{3}\) onto orthonormal vector \(\vec{u}_{1}\):}
+\[
+\frac{\vec{v}_{3} \cdot \vec{u}_{1}}{\vec{u}_{1} \cdot \vec{u}_{1}} = 0.7071067811
+\]
+\subsection*{ \vspace{1em} Scalar multiplication formula}
+\[
+\lambda \cdot (a_1, a_2, \dots, a_n) = (\lambda a_1, \lambda a_2, \dots, \lambda a_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+0.7071067811 \cdot 0.7071067811 = 0.5
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+0.7071067811 \cdot 0.7071067811 = 0.5
+\]
+\subsection*{ \vspace{1em} Component 3}
+\[
+0.7071067811 \cdot 0 = 0
+\]
+\subsection*{ \vspace{1em} Projection vector:}
+\[
+\begin{pmatrix}0.5 \\ 0.5 \\ 0\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+0 - 0.5 = -0.5
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+1 - 0.5 = 0.5
+\]
+\subsection*{ \vspace{1em} Component 3}
+\[
+1 - 0 = 1
+\]
+\subsection*{ \vspace{1em} Subtract projection from \(\vec{u}_{3}\), resulting in:}
+\[
+\begin{pmatrix}-0.5 \\ 0.5 \\ 1\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+0 \cdot 0.4082482904 + 1 \cdot -0.4082482904 + 1 \cdot 0.8164965809 = 0.4082482904
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+0.4082482904 \cdot 0.4082482904 + -0.4082482904 \cdot -0.4082482904 + 0.8164965809 \cdot 0.8164965809 = 0.9999999999
+\]
+\subsection*{ \vspace{1em} Calculate projection coefficient of \(\vec{v}_{3}\) onto orthonormal vector \(\vec{u}_{2}\):}
+\[
+\frac{\vec{v}_{3} \cdot \vec{u}_{2}}{\vec{u}_{2} \cdot \vec{u}_{2}} = 0.4082482904
+\]
+\subsection*{ \vspace{1em} Scalar multiplication formula}
+\[
+\lambda \cdot (a_1, a_2, \dots, a_n) = (\lambda a_1, \lambda a_2, \dots, \lambda a_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+0.4082482904 \cdot 0.4082482904 = 0.1666666666
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+0.4082482904 \cdot -0.4082482904 = -0.1666666666
+\]
+\subsection*{ \vspace{1em} Component 3}
+\[
+0.4082482904 \cdot 0.8164965809 = 0.3333333333
+\]
+\subsection*{ \vspace{1em} Projection vector:}
+\[
+\begin{pmatrix}0.1666666666 \\ -0.1666666666 \\ 0.3333333333\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+-0.5 - 0.1666666666 = -0.6666666666
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+0.5 - -0.1666666666 = 0.6666666666
+\]
+\subsection*{ \vspace{1em} Component 3}
+\[
+1 - 0.3333333333 = 0.6666666666
+\]
+\subsection*{ \vspace{1em} Subtract projection from \(\vec{u}_{3}\), resulting in:}
+\[
+\begin{pmatrix}-0.6666666666 \\ 0.6666666666 \\ 0.6666666666\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+-0.6666666666 \cdot -0.6666666666 + 0.6666666666 \cdot 0.6666666666 + 0.6666666666 \cdot 0.6666666666 = 1.3333333333
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{1.3333333333}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{1.3333333333} = 1.1547005383
+\]
+\subsection*{ \vspace{1em} Normalize \(\vec{u}_{3}\) to obtain orthonormal vector:}
+\[
+\begin{pmatrix}-0.5773502691 \\ 0.5773502691 \\ 0.5773502691\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Orthogonal basis}
+\[
+\begin{pmatrix}0.7071067811 \\ 0.7071067811 \\ 0\end{pmatrix}, \begin{pmatrix}0.4082482904 \\ -0.4082482904 \\ 0.8164965809\end{pmatrix}, \begin{pmatrix}-0.5773502691 \\ 0.5773502691 \\ 0.5773502691\end{pmatrix}
+\]
+\[
+\begin{pmatrix}0.7071067811 \\ 0.7071067811 \\ 0\end{pmatrix}
+\begin{pmatrix}0.4082482904 \\ -0.4082482904 \\ 0.8164965809\end{pmatrix}
+\begin{pmatrix}-0.5773502691 \\ 0.5773502691 \\ 0.5773502691\end{pmatrix}
+\]
+\vspace{1em}
+\hrule
+\vspace{1em}
+
+\end{document}

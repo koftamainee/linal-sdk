@@ -14,8 +14,19 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(
+  ${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/include/core
+  ${PROJECT_SOURCE_DIR}/include/math ${PROJECT_SOURCE_DIR}/include/solver
+  ${PROJECT_SOURCE_DIR}/include/writter)
 
-file(GLOB SOURCES src/*.cpp)
+file(
+  GLOB_RECURSE
+  SOURCES
+  src/*.cpp
+  src/core/*.cpp
+  src/math/*.cpp
+  src/solver/*.cpp
+  src/writter/*.cpp
+  src/logger/*.cpp)
 
 add_executable(main ${SOURCES})
