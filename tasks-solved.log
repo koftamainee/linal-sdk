@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.3.29)  27 JUN 2025 19:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.3.29)  27 JUN 2025 19:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -218,7 +218,11 @@ Overfull \hbox (407.89949pt too wide) detected at line 836
 
 [28]
 
-[29] (./tasks-solved.aux)
+[29]
+
+[30]
+
+[31] (./tasks-solved.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -241,10 +245,10 @@ cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
 t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmsy7.pfb>
-Output written on tasks-solved.pdf (29 pages, 142016 bytes).
+Output written on tasks-solved.pdf (31 pages, 144004 bytes).
 PDF statistics:
- 147 PDF objects out of 1000 (max. 8388607)
- 95 compressed objects within 1 object stream
+ 154 PDF objects out of 1000 (max. 8388607)
+ 100 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

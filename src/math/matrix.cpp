@@ -597,6 +597,11 @@ size_t Matrix::rank() const {
   size_t m = rows_;
   size_t n = cols_;
 
+  auto& writter = LatexWriter::get_instance();
+  writter.add_solution_step(
+      "Rank calculation",
+      R"(\text{Starting rank calculation by Gaussian elimination.})");
+
   for (size_t col = 0, row = 0; col < n && row < m; ++col) {
     size_t sel = row;
     for (size_t i = row + 1; i < m; ++i) {
@@ -606,19 +611,54 @@ size_t Matrix::rank() const {
     }
 
     if (temp.at(sel, col) == 0) {
+      writter.add_solution_step(
+          "Skipping column",
+          R"(\text{All elements below row } )" + std::to_string(row) +
+              R"( \text{ in column } )" + std::to_string(col) +
+              R"( \text{ are zero, skipping.})");
       continue;
     }
 
-    std::swap(temp.data_[row], temp.data_[sel]);
+    if (sel != row) {
+      std::swap(temp.data_[row], temp.data_[sel]);
+      writter.add_solution_step(
+          "Row swap", R"(\text{Swapped rows } )" + std::to_string(row) +
+                          R"( \text{ and } )" + std::to_string(sel) +
+                          R"( \text{ to bring pivot into position.})");
+    }
+
+    writter.add_solution_step(
+        "Pivot selected",
+        R"(\text{Pivot at position } ( )" + std::to_string(row) + R"(,)" +
+            std::to_string(col) + R"( ) = )" + temp.at(row, col).to_decimal());
 
     for (size_t i = row + 1; i < m; ++i) {
       bigfloat factor = temp.at(i, col) / temp.at(row, col);
+      writter.add_solution_step("Eliminating row",
+                                R"(\text{Row } )" + std::to_string(i) +
+                                    R"(\ \text{ -= } )" + factor.to_decimal() +
+                                    R"( \times \text{row } )" +
+                                    std::to_string(row));
+
       for (size_t j = col; j < n; ++j) {
+        bigfloat before = temp.at(i, j);
         temp.at(i, j) -= factor * temp.at(row, j);
+
+        writter.add_solution_step("Updating element",
+                                  R"(\text{temp}( )" + std::to_string(i) +
+                                      R"(,)" + std::to_string(j) + R"( ) = )" +
+                                      before.to_decimal() + R"( - )" +
+                                      factor.to_decimal() + R"( \times )" +
+                                      temp.at(row, j).to_decimal() + R"( = )" +
+                                      temp.at(i, j).to_decimal());
       }
     }
+
     ++rank;
     ++row;
+
+    writter.add_solution_step(
+        "Rank incremented", R"(\text{Current rank: } )" + std::to_string(rank));
   }
 
   return rank;

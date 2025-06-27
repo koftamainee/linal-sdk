@@ -160,7 +160,7 @@ bool Solver::process_file(const std::string& input_path) {
       writer.write_line("\\subsection*{Eigenvectors}");
       solve_matrix_eigenvectors(line);
 
-    } else if (task_type == "RANK") {
+    } else if (task_type == "MATRIX_RANK") {
       std::cout << "Solving matrix rank task...\n";
       writer.write_line("\\subsection*{Matrix rank}");
       solve_matrix_rank(line);
@@ -645,9 +645,9 @@ void Solver::solve_matrix_eigenvectors(std::string const& data) {
 }
 
 void Solver::solve_matrix_rank(std::string const& data) {
-  std::string temp = data.substr(data.find('('));
-  auto pos1 = temp.find(')');
-  std::string mat_s = temp.substr(1, pos1 - 1);
+  std::string temp = data.substr(data.find('['));
+  auto pos1 = temp.find(']');
+  std::string mat_s = temp.substr(0, pos1 + 1);
 
   Matrix mat(mat_s);
   size_t matrix_rank = mat.rank();

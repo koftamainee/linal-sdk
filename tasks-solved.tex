@@ -1172,5 +1172,94 @@ Solving the system $\begin{pmatrix}1 & -12515 & 3 \\ 124125 & 5 & 6 \\ 7 & 8 & 2
 \hrulefill
 \bigskip
 
+\section*{Task 18}
+
+\subsection*{Matrix rank}
+\subsection*{ \vspace{1em} Rank calculation}
+\[
+\text{Starting rank calculation by Gaussian elimination.}
+\]
+\subsection*{ \vspace{1em} Row swap}
+\[
+\text{Swapped rows } 0 \text{ and } 2 \text{ to bring pivot into position.}
+\]
+\subsection*{ \vspace{1em} Pivot selected}
+\[
+\text{Pivot at position } ( 0,0 ) = 7
+\]
+\subsection*{ \vspace{1em} Eliminating row}
+\[
+\text{Row } 1\ \text{ -= } 0.5714285714 \times \text{row } 0
+\]
+\subsection*{ \vspace{1em} Updating element}
+\[
+\text{temp}( 1,0 ) = 4 - 0.5714285714 \times 7 = 0
+\]
+\subsection*{ \vspace{1em} Updating element}
+\[
+\text{temp}( 1,1 ) = 5 - 0.5714285714 \times 8 = 0.4285714285
+\]
+\subsection*{ \vspace{1em} Updating element}
+\[
+\text{temp}( 1,2 ) = 6 - 0.5714285714 \times 9 = 0.8571428571
+\]
+\subsection*{ \vspace{1em} Eliminating row}
+\[
+\text{Row } 2\ \text{ -= } 0.1428571428 \times \text{row } 0
+\]
+\subsection*{ \vspace{1em} Updating element}
+\[
+\text{temp}( 2,0 ) = 1 - 0.1428571428 \times 7 = 0
+\]
+\subsection*{ \vspace{1em} Updating element}
+\[
+\text{temp}( 2,1 ) = 2 - 0.1428571428 \times 8 = 0.8571428571
+\]
+\subsection*{ \vspace{1em} Updating element}
+\[
+\text{temp}( 2,2 ) = 3 - 0.1428571428 \times 9 = 1.7142857142
+\]
+\subsection*{ \vspace{1em} Rank incremented}
+\[
+\text{Current rank: } 1
+\]
+\subsection*{ \vspace{1em} Row swap}
+\[
+\text{Swapped rows } 1 \text{ and } 2 \text{ to bring pivot into position.}
+\]
+\subsection*{ \vspace{1em} Pivot selected}
+\[
+\text{Pivot at position } ( 1,1 ) = 0.8571428571
+\]
+\subsection*{ \vspace{1em} Eliminating row}
+\[
+\text{Row } 2\ \text{ -= } 0.5 \times \text{row } 1
+\]
+\subsection*{ \vspace{1em} Updating element}
+\[
+\text{temp}( 2,1 ) = 0.4285714285 - 0.5 \times 0.8571428571 = 0
+\]
+\subsection*{ \vspace{1em} Updating element}
+\[
+\text{temp}( 2,2 ) = 0.8571428571 - 0.5 \times 1.7142857142 = 0
+\]
+\subsection*{ \vspace{1em} Rank incremented}
+\[
+\text{Current rank: } 2
+\]
+\subsection*{ \vspace{1em} Skipping column}
+\[
+\text{All elements below row } 2 \text{ in column } 2 \text{ are zero, skipping.}
+\]
+\medskip
+
+\[
+\text{rank}(\begin{pmatrix}1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9\end{pmatrix}) = 2
+\]
+\bigskip
+
+\hrulefill
+\bigskip
+
 
 \end{document}
