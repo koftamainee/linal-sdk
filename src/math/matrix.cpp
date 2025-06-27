@@ -7,6 +7,20 @@
 
 #include "latex_writter.h"
 
+namespace {
+
+std::string join_decimal_latex(const std::vector<bigfloat>& vec) {
+  std::string result;
+  for (size_t i = 0; i < vec.size(); ++i) {
+    if (i > 0) {
+      result += ", ";
+    }
+    result += vec[i].to_decimal();
+  }
+  return result;
+}
+}  // namespace
+
 void Matrix::check_same_size(const Matrix& other, const std::string& op) const {
   if (rows_ != other.rows_ || cols_ != other.cols_) {
     throw std::runtime_error("Matrix size mismatch in operation: " + op);
@@ -674,21 +688,48 @@ std::vector<std::vector<bigfloat>> Matrix::eigenvectors() const {
 
 size_t Matrix::span_dimension(
     const std::vector<std::vector<bigfloat>>& vectors) {
+  auto& writter = LatexWriter::get_instance();
+
+  writter.add_solution_step(
+      "Span dimension",
+      R"(\text{Constructing a matrix from input vectors to compute the dimension of their span.})");
+
   Matrix m(vectors.size(), vectors[0].size());
   for (size_t i = 0; i < vectors.size(); ++i) {
     m.data_[i] = vectors[i];
+    writter.add_solution_step(
+        "Inserting vector", R"(\text{Row } )" + std::to_string(i) +
+                                R"( = \left[)" +
+                                join_decimal_latex(vectors[i]) + R"(\right])");
   }
+
   return m.rank();
 }
 
 bool Matrix::is_in_span(const std::vector<std::vector<bigfloat>>& basis,
                         const std::vector<bigfloat>& vector) {
+  auto& writter = LatexWriter::get_instance();
+
+  writter.add_solution_step(
+      "Span membership check",
+      R"(\text{Checking if the given vector is in the span of the basis.})");
+
   Matrix m(basis.size(), basis[0].size());
   for (size_t i = 0; i < basis.size(); ++i) {
     m.data_[i] = basis[i];
+    writter.add_solution_step("Inserting basis vector",
+                              R"(\text{Row } )" + std::to_string(i) +
+                                  R"( = \left[)" +
+                                  join_decimal_latex(basis[i]) + R"(\right])");
   }
+
+  writter.add_solution_step("Vector to test",
+                            R"(\text{Target vector } = \left[)" +
+                                join_decimal_latex(vector) + R"(\right])");
+
   try {
     m.solve_gauss(vector);
+
     return true;
   } catch (std::exception const& e) {
     return false;

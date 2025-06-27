@@ -685,10 +685,8 @@ void Solver::solve_span_dimension(std::string const& data) {
   size_t span_dim = Matrix::span_dimension(vectors);
 
   writer.write_line("\\medskip\n");
-  writer.write_line("Dimension of the span of the given vectors:");
-  writer.begin_math();
-  writer.write_line("\\dim(\\text{span}) = " + std::to_string(span_dim));
-  writer.end_math();
+  writer.add_solution_step("Dimension of the span of the given vectors:",
+                           "\\dim(\\text{span}) = " + std::to_string(span_dim));
 }
 
 void Solver::solve_vector_in_span(std::string const& data) {
@@ -733,11 +731,9 @@ void Solver::solve_vector_in_span(std::string const& data) {
   bool is_in = Matrix::is_in_span(basis, test_vector);
 
   writer.write_line("\\medskip\n");
-  writer.write_line("Checking whether vector " + test_vec.to_latex() +
-                    " belongs to the span:");
-  writer.begin_math();
+  writer.write_line("Checking whether vector $" + test_vec.to_latex() +
+                    "$ belongs to the span:");
   writer.write_line("Result: " + std::string(is_in
                                                  ? "\\text{belongs}"
                                                  : "\\text{does not belong}"));
-  writer.end_math();
 }
