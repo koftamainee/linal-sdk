@@ -78,8 +78,72 @@ bigfloat cos(bigfloat const &number, bigfloat const &EPS) {
   return res;
 }
 
-bigfloat tg(bigfloat const &number, bigfloat const &EPS) {
-  return sin(number, EPS) / cos(number, EPS);
+bigfloat tg(const bigfloat &number, const bigfloat &EPS) {
+  bigfloat pi = bigfloat::PI(EPS);
+  bigfloat two(2);
+  bigfloat half_pi = pi / two;
+  bigfloat x = number;
+  bool negate = false;
+
+  // Приведение аргумента к [-π, π]
+  if (x.abs() > pi) {
+    x = x - (x / pi).truncate() * pi;
+  }
+
+  // Симметрии тангенса
+  if (x > half_pi) {
+    x = pi - x;
+    negate = !negate;
+    x.simplify();
+  } else if (x <= -half_pi) {
+    x = pi + x;
+    negate = !negate;
+    x.simplify();
+  }
+  if (x < bigfloat(0)) {
+    x = -x;
+    negate = !negate;
+    x.simplify();
+  }
+
+  // Проверка на вертикальную асимптоту
+  if (x.abs() > half_pi - EPS) {
+    throw std::invalid_argument("tg: аргумент слишком близок к π/2");
+  }
+
+  // Вычисление через ряд Маклорена
+  bigfloat result(0);
+  bigfloat term;
+  bigfloat x_squared = x * x;
+  bigfloat x_power = x;
+
+  bigfloat pow_neg4_n = bigfloat(-4);
+  bigfloat pow_4_n = bigfloat(4);
+
+  bigfloat factorial = 1;
+  size_t n = 1;
+
+  for (; n <= 1000; ++n) {
+    const bigfloat &B = bigfloat::bernoulli_number(2 * n);
+    bigfloat coef = B * pow_neg4_n * (bigfloat(1) - pow_4_n);
+
+    factorial *= (2 * static_cast<int>(n) - 1) * (2 * static_cast<int>(n));
+
+    term = coef * x_power / factorial;
+
+    if (term.abs() < EPS) {
+      break;
+    }
+
+    result += term;
+
+    x_power *= x_squared;
+    pow_neg4_n *= bigfloat(-4);
+    pow_4_n *= bigfloat(4);
+  }
+
+  result.simplify();
+  return negate ? -result : result;
 }
 
 bigfloat ctg(bigfloat const &number, bigfloat const &EPS) {
@@ -152,20 +216,19 @@ bigfloat arcctg(bigfloat const &number, bigfloat const &EPS) {
 }
 
 bigfloat arctg(bigfloat const &number, bigfloat const &EPS) {
-  if (number.abs() > 1) {
+  bigfloat reduced_x = bigfloat::reduce_argument(number, EPS);
+  if (reduced_x.abs() > 1) {
     const bigfloat half_pi = bigfloat::PI(EPS) / 2;
-    return (number > 0) ? half_pi - arctg(number.reciprocal(), EPS)
-                        : -half_pi - arctg(number.reciprocal(), EPS);
+    return (reduced_x > 0) ? half_pi - arctg(reduced_x.reciprocal(), EPS)
+                           : -half_pi - arctg(reduced_x.reciprocal(), EPS);
   }
-  if (number == 1) {
+  if (reduced_x == 1) {
     return bigfloat::PI(EPS) / 4;
   }
 
-  bigfloat reduced_x = bigfloat::reduce_argument(number, EPS);
-
-  bigfloat term = number;
+  bigfloat term = reduced_x;
   bigfloat result = term;
-  bigfloat number_squared = number * number;
+  bigfloat number_squared = reduced_x * reduced_x;
   bigint n = 1;
   int sign = -1;
 

@@ -1,6 +1,5 @@
 #include <cstring>
 #include <exception>
-#include <iostream>
 
 #include "bigfloat.h"
 

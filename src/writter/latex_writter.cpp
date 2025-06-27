@@ -72,8 +72,8 @@ bool LatexWriter::is_open() const { return out_file.is_open(); }
 
 void LatexWriter::write_sep_line() {
   if (out_file.is_open()) {
-    out_file << "\\vspace{1em}\n";
-    out_file << "\\hrule\n";
-    out_file << "\\vspace{1em}\n";
+    out_file << "\\bigskip\n\n";
+    out_file << "\\hrulefill\n";
+    out_file << "\\bigskip\n\n";
   }
 }

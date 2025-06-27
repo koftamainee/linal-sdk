@@ -1,4 +1,4 @@
-#include "core/bigfloat.h"
+#include "bigfloat.h"
 
 #include <stdexcept>
 
@@ -33,7 +33,3 @@ bigfloat::bigfloat(bigint const &numerator, bigint const &denominator) {
 
 bigfloat::bigfloat(bigint const &other)
     : numerator_(other.abs()), denominator_(other < 0 ? -1 : 1) {}
-
-bigfloat::bigfloat(std::string const &str) {
-  throw std::runtime_error("string constructor not implemented");
-}

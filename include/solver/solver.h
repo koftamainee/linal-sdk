@@ -19,6 +19,19 @@ class Solver {
   void solve_norm(std::string const& data);
   void solve_gram_schmidt_process(const std::string& data);
 
+  void solve_matrix_add(std::string const& data);
+  void solve_matrix_multiply(std::string const& data);
+  void solve_matrix_scalar_multiply(std::string const& data);
+  void solve_matrix_determinant(std::string const& data);
+  void solve_matrix_inverse(std::string const& data);
+  void solve_matrix_gauss(std::string const& data);
+  void solve_matrix_gauss_jordan(std::string const& data);
+  void solve_matrix_eigenvalues(std::string const& data);
+  void solve_matrix_eigenvectors(std::string const& data);
+  void solve_matrix_rank(std::string const& data);
+  void solve_span_dimension(std::string const& data);
+  void solve_vector_in_span(std::string const& data);
+
  public:
   Solver();
 

@@ -28,7 +28,6 @@ class bigfloat final {
   static void compute_bernoulli_up_to(size_t n);
 
   bigfloat();
-  bigfloat(std::string const &str);
   bigfloat(bigint const &numerator, bigint const &denominator);
   bigfloat(bigint const &other);
   bigfloat(int other);

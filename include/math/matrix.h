@@ -4,12 +4,10 @@
 #include <vector>
 
 #include "core/bigfloat.h"
-#include "latex_writter.h"
 
 class Matrix {
  private:
   std::vector<std::vector<bigfloat>> data_;
-  LatexWriter& writter = LatexWriter::get_instance();
   size_t rows_, cols_;
 
   void check_same_size(const Matrix& other, const std::string& op) const;

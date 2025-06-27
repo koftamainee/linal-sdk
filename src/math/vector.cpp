@@ -49,8 +49,6 @@ bigfloat& Vector::operator[](size_t index) {
   return components_[index];
 }
 
-// Arithmetic operations
-
 Vector& Vector::operator+=(const Vector& other) & {
   check_dimension(other.dimension(), "operator+=");
 
@@ -439,7 +437,6 @@ std::vector<Vector> Vector::gram_schmidt_process(
   std::vector<Vector> ortho_basis;
   ortho_basis.reserve(vectors.size());
 
-  // Step 1: Show the given set of vectors
   {
     std::string desc = "Given set of vectors:";
     std::string math = "\\{ ";
@@ -454,14 +451,12 @@ std::vector<Vector> Vector::gram_schmidt_process(
     writter.add_solution_step(desc, math);
   }
 
-  // Iterate over each vector to orthogonalize
   for (size_t i = 0; i < vectors.size(); ++i) {
     Vector u = vectors[i];
     writter.add_solution_step(
         "Take vector \\(\\vec{v}_{" + std::to_string(i + 1) + "}\\):",
         u.to_latex());
 
-    // Subtract projections on existing orthonormal basis vectors
     for (size_t j = 0; j < ortho_basis.size(); ++j) {
       const Vector& e = ortho_basis[j];
       bigfloat proj_coeff = vectors[i].dot(e) / e.dot(e);
@@ -469,7 +464,7 @@ std::vector<Vector> Vector::gram_schmidt_process(
       writter.add_solution_step(
           "Calculate projection coefficient of \\(\\vec{v}_{" +
               std::to_string(i + 1) +
-              "}\\) onto orthonormal vector \\(\\vec{u}_{" +
+              R"(}\) onto orthonormal vector \(\vec{u}_{)" +
               std::to_string(j + 1) + "}\\):",
           "\\frac{\\vec{v}_{" + std::to_string(i + 1) + "} \\cdot \\vec{u}_{" +
               std::to_string(j + 1) + "}}{\\vec{u}_{" + std::to_string(j + 1) +

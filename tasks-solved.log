@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.3.29)  27 JUN 2025 04:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.3.29)  27 JUN 2025 19:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -154,7 +154,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [3]
 
 [4]
-Overfull \hbox (30.80191pt too wide) detected at line 188
+Overfull \hbox (30.80191pt too wide) detected at line 204
 \OT1/cmr/m/n/10 1 \OMS/cmsy/m/n/10 ^^A ^^@\OT1/cmr/m/n/10 1394038355462 + 2 \OM
 S/cmsy/m/n/10 ^^A \OT1/cmr/m/n/10 35997291 + 3 \OMS/cmsy/m/n/10 ^^A ^^@\OT1/cmr
 /m/n/10 31386713 + 4 \OMS/cmsy/m/n/10 ^^A \OT1/cmr/m/n/10 1716143 + 5 \OMS/cmsy
@@ -183,7 +183,42 @@ S/cmsy/m/n/10 ^^A \OT1/cmr/m/n/10 35997291 + 3 \OMS/cmsy/m/n/10 ^^A ^^@\OT1/cmr
 
 [13]
 
-[14] (./tasks-solved.aux)
+[14]
+
+[15]
+
+[16]
+
+[17]
+
+[18]
+
+[19]
+
+[20]
+Overfull \hbox (407.89949pt too wide) detected at line 836
+[]
+ []
+
+
+
+[21]
+
+[22]
+
+[23]
+
+[24]
+
+[25]
+
+[26]
+
+[27]
+
+[28]
+
+[29] (./tasks-solved.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -192,11 +227,11 @@ L3 programming layer <2025-01-18>
 Here is how much of TeX's memory you used:
  1766 strings out of 475171
  24926 string characters out of 5767095
- 414586 words of memory out of 5000000
+ 413586 words of memory out of 5000000
  24791 multiletter control sequences out of 15000+600000
  566093 words of font info for 65 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 56i,7n,65p,285b,184s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 56i,8n,65p,306b,184s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/publi
@@ -204,11 +239,12 @@ c/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
 /share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmsy10.pfb>
-Output written on tasks-solved.pdf (14 pages, 106142 bytes).
+blic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmsy7.pfb>
+Output written on tasks-solved.pdf (29 pages, 142016 bytes).
 PDF statistics:
- 95 PDF objects out of 1000 (max. 8388607)
- 60 compressed objects within 1 object stream
+ 147 PDF objects out of 1000 (max. 8388607)
+ 95 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
