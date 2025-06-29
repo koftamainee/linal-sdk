@@ -226,6 +226,8 @@ bool Solver::process_file(const std::string& input_path) {
     writer.write_sep_line();
   }
 
+  std::cout << "Solved " << solved_tasks << " tasks.\n";
+
   file.close();
   return true;
 }
@@ -924,12 +926,15 @@ void Solver::solve_distance_point_to_line(const std::string& data) {
 void Solver::solve_distance_between_parallel_lines(const std::string& data) {
   const std::string prefix = "DISTANCE_PARALLEL_LINES ";
   size_t pos = data.find(prefix);
-  if (pos == std::string::npos) throw std::invalid_argument("Missing prefix");
+  if (pos == std::string::npos) {
+    throw std::invalid_argument("Missing prefix");
+  }
 
   std::string input = data.substr(pos + prefix.size());
   size_t sep = input.find('|');
-  if (sep == std::string::npos)
+  if (sep == std::string::npos) {
     throw std::invalid_argument("Expected two lines");
+  }
 
   std::string l1 = input.substr(0, sep);
   std::string l2 = input.substr(sep + 1);

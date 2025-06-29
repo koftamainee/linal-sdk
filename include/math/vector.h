@@ -4,12 +4,12 @@
 #include <vector>
 
 #include "core/bigfloat.h"
-#include "latex_writter.h"
+#include "latex_writer.h"
 
 class Vector {
  private:
   std::vector<bigfloat> components_;
-  LatexWriter* writter = &LatexWriter::get_instance();
+  LatexWriter* writer = &LatexWriter::get_instance();
 
   void check_dimension(size_t expected, const std::string& operation) const;
   void check_non_zero() const;

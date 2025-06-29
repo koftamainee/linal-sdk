@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "writter/latex_writter.h"
+#include "writer/latex_writer.h"
 
 class Solver {
  private:

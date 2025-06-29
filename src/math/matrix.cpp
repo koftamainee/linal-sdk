@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <string>
 
-#include "latex_writter.h"
+#include "latex_writer.h"
 #include "vector.h"
 
 namespace {
@@ -107,14 +107,14 @@ const bigfloat& Matrix::at(size_t row, size_t col) const {
 
 Matrix& Matrix::operator+=(const Matrix& other) {
   check_same_size(other, "+=");
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Matrix addition formula",
       R"(\text{For all } i,j: \quad C_{ij} = A_{ij} + B_{ij})");
 
   for (size_t i = 0; i < rows_; ++i) {
     for (size_t j = 0; j < cols_; ++j) {
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Adding elements at position (" + std::to_string(i) + "," +
               std::to_string(j) + ")",
           data_[i][j].to_decimal() + " + " + other.data_[i][j].to_decimal() +
@@ -126,8 +126,8 @@ Matrix& Matrix::operator+=(const Matrix& other) {
 }
 
 Matrix Matrix::operator+(const Matrix& other) const {
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Matrix addition operation",
       R"(\text{Computing } A + B \text{ using compound assignment})");
 
@@ -138,14 +138,14 @@ Matrix Matrix::operator+(const Matrix& other) const {
 
 Matrix& Matrix::operator-=(const Matrix& other) {
   check_same_size(other, "-=");
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Matrix subtraction formula",
       R"(\text{For all } i,j: \quad C_{ij} = A_{ij} - B_{ij})");
 
   for (size_t i = 0; i < rows_; ++i) {
     for (size_t j = 0; j < cols_; ++j) {
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Subtracting elements at position (" + std::to_string(i) + "," +
               std::to_string(j) + ")",
           data_[i][j].to_decimal() + " - " + other.data_[i][j].to_decimal() +
@@ -157,8 +157,8 @@ Matrix& Matrix::operator-=(const Matrix& other) {
 }
 
 Matrix Matrix::operator-(const Matrix& other) const {
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Matrix subtraction operation",
       R"(\text{Computing } A - B \text{ using compound assignment})");
 
@@ -168,14 +168,14 @@ Matrix Matrix::operator-(const Matrix& other) const {
 }
 
 Matrix& Matrix::operator*=(const bigfloat& scalar) {
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Scalar multiplication formula",
       R"(\text{For all } i,j: \quad C_{ij} = A_{ij} \times \lambda)");
 
   for (size_t i = 0; i < rows_; ++i) {
     for (size_t j = 0; j < cols_; ++j) {
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Multiplying element at position (" + std::to_string(i) + "," +
               std::to_string(j) + ")",
           data_[i][j].to_decimal() + " \\times " + scalar.to_decimal() + " = " +
@@ -188,8 +188,8 @@ Matrix& Matrix::operator*=(const bigfloat& scalar) {
 
 // Scalar multiplication operator* - через *=
 Matrix Matrix::operator*(const bigfloat& scalar) const {
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Scalar multiplication operation",
       R"(\text{Computing } A \times \lambda \text{ using compound assignment})");
 
@@ -203,8 +203,8 @@ Matrix& Matrix::operator*=(const Matrix& other) {
     throw std::runtime_error("Matrix multiplication dimension mismatch");
   }
 
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Matrix multiplication formula",
       R"(\text{For all } i,j: \quad C_{ij} = \sum_{k=0}^{n-1} A_{ik} \times B_{kj})");
 
@@ -227,7 +227,7 @@ Matrix& Matrix::operator*=(const Matrix& other) {
                  other.data_[k][j].to_decimal() + ")";
       }
 
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Computing element at position (" + std::to_string(i) + "," +
               std::to_string(j) + ")",
           calculation + terms + " = " + result.data_[i][j].to_decimal());
@@ -239,8 +239,8 @@ Matrix& Matrix::operator*=(const Matrix& other) {
 }
 
 Matrix Matrix::operator*(const Matrix& other) const {
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Matrix multiplication operation",
       R"(\text{Computing } A \times B \text{ using compound assignment})");
 
@@ -292,8 +292,8 @@ bigfloat Matrix::determinant() const {
   Matrix temp = *this;
   bigfloat det = 1;
 
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Matrix determinant calculation",
       R"(\text{Starting determinant calculation by Gaussian elimination with pivot selection.})");
 
@@ -303,7 +303,7 @@ bigfloat Matrix::determinant() const {
       ++pivot;
     }
     if (pivot == n) {
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Zero column found",
           R"(\text{All elements in column } )" + std::to_string(i) +
               R"( \text{ below diagonal are zero, determinant is } 0.)");
@@ -313,7 +313,7 @@ bigfloat Matrix::determinant() const {
     if (pivot != i) {
       std::swap(temp.data_[i], temp.data_[pivot]);
       det = -det;
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Row swap",
           R"(\text{Swapped rows } )" + std::to_string(i) +
               R"(\ \text{ and } )" + std::to_string(pivot) +
@@ -321,7 +321,7 @@ bigfloat Matrix::determinant() const {
     }
 
     det *= temp.at(i, i);
-    writter.add_solution_step(
+    writer.add_solution_step(
         "Pivot element chosen",
         R"(\text{Pivot element } ( )" + std::to_string(i) + R"(,)" +
             std::to_string(i) + R"( ) = )" + temp.at(i, i).to_decimal() +
@@ -329,7 +329,7 @@ bigfloat Matrix::determinant() const {
 
     for (size_t j = i + 1; j < n; ++j) {
       bigfloat factor = temp.at(j, i) / temp.at(i, i);
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Eliminating element",
           R"(\text{Calculating factor for row } )" + std::to_string(j) +
               R"(:\ )" + temp.at(j, i).to_decimal() + R"( \div )" +
@@ -339,13 +339,13 @@ bigfloat Matrix::determinant() const {
         bigfloat old_value = temp.at(j, k);
         temp.at(j, k) -= factor * temp.at(i, k);
 
-        writter.add_solution_step("Updating matrix element",
-                                  R"(\text{temp}( )" + std::to_string(j) +
-                                      R"(,)" + std::to_string(k) + R"( ): )" +
-                                      old_value.to_decimal() + R"( - )" +
-                                      factor.to_decimal() + R"( \times )" +
-                                      temp.at(i, k).to_decimal() + R"( = )" +
-                                      temp.at(j, k).to_decimal());
+        writer.add_solution_step("Updating matrix element",
+                                 R"(\text{temp}( )" + std::to_string(j) +
+                                     R"(,)" + std::to_string(k) + R"( ): )" +
+                                     old_value.to_decimal() + R"( - )" +
+                                     factor.to_decimal() + R"( \times )" +
+                                     temp.at(i, k).to_decimal() + R"( = )" +
+                                     temp.at(j, k).to_decimal());
       }
     }
   }
@@ -362,8 +362,8 @@ Matrix Matrix::inverse() const {
     inv.at(i, i) = 1;
   }
 
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Matrix inversion",
       R"(\text{Starting matrix inversion using Gauss-Jordan elimination. The identity matrix is augmented and operations are applied to transform the original matrix to the identity, and the identity to the inverse.})");
 
@@ -373,7 +373,7 @@ Matrix Matrix::inverse() const {
       ++pivot;
     }
     if (pivot == n) {
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Singular matrix",
           R"(\text{Column } )" + std::to_string(i) +
               R"( \text{ has no non-zero pivot, the matrix is singular.})");
@@ -383,17 +383,17 @@ Matrix Matrix::inverse() const {
     if (pivot != i) {
       std::swap(a.data_[i], a.data_[pivot]);
       std::swap(inv.data_[i], inv.data_[pivot]);
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Row swap", R"(\text{Swapped rows } )" + std::to_string(i) +
                           R"( and )" + std::to_string(pivot) +
                           R"( \text{ in both matrices to select pivot.})");
     }
 
     bigfloat div = a.at(i, i);
-    writter.add_solution_step("Normalize pivot row",
-                              R"(\text{Dividing row } )" + std::to_string(i) +
-                                  R"( \text{ by pivot } )" + div.to_decimal() +
-                                  R"( \text{ to make pivot } 1.)");
+    writer.add_solution_step("Normalize pivot row",
+                             R"(\text{Dividing row } )" + std::to_string(i) +
+                                 R"( \text{ by pivot } )" + div.to_decimal() +
+                                 R"( \text{ to make pivot } 1.)");
 
     for (size_t j = 0; j < n; ++j) {
       a.at(i, j) /= div;
@@ -406,7 +406,7 @@ Matrix Matrix::inverse() const {
       }
 
       bigfloat factor = a.at(j, i);
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Eliminate column entry",
           R"(\text{Row } )" + std::to_string(j) + R"( \leftarrow \text{Row })" +
               std::to_string(j) + R"( - )" + factor.to_decimal() +
@@ -429,8 +429,8 @@ std::vector<bigfloat> Matrix::solve_gauss(
   Matrix a = *this;
   std::vector<bigfloat> x = b;
 
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Solving Ax = b via Gaussian elimination",
       R"(\text{Solving the system of linear equations using Gaussian elimination with back substitution.})");
 
@@ -441,7 +441,7 @@ std::vector<bigfloat> Matrix::solve_gauss(
     }
 
     if (pivot == n) {
-      writter.add_solution_step(
+      writer.add_solution_step(
           "No unique solution",
           R"(\text{Column } i = )" + std::to_string(i) +
               R"( \text{ has all zeros below the diagonal, no unique solution exists.})");
@@ -451,7 +451,7 @@ std::vector<bigfloat> Matrix::solve_gauss(
     if (pivot != i) {
       std::swap(a.data_[i], a.data_[pivot]);
       std::swap(x[i], x[pivot]);
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Row swap", R"(\text{Swapped rows } i = )" + std::to_string(i) +
                           R"( \text{ and } pivot = )" + std::to_string(pivot) +
                           R"( \text{ to bring pivot into position.})");
@@ -459,7 +459,7 @@ std::vector<bigfloat> Matrix::solve_gauss(
 
     for (size_t j = i + 1; j < n; ++j) {
       bigfloat factor = a.at(j, i) / a.at(i, i);
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Eliminating element",
           R"(\text{Row } j = )" + std::to_string(j) +
               R"( \leftarrow \text{Row } j - )" + factor.to_decimal() +
@@ -468,7 +468,7 @@ std::vector<bigfloat> Matrix::solve_gauss(
       for (size_t k = i; k < n; ++k) {
         bigfloat old_value = a.at(j, k);
         a.at(j, k) -= factor * a.at(i, k);
-        writter.add_solution_step(
+        writer.add_solution_step(
             "Updating matrix element",
             R"(a_{)" + std::to_string(j) + R"(,)" + std::to_string(k) +
                 R"(} = )" + old_value.to_decimal() + R"( - )" +
@@ -478,7 +478,7 @@ std::vector<bigfloat> Matrix::solve_gauss(
 
       bigfloat old_rhs = x[j];
       x[j] -= factor * x[i];
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Updating RHS", R"(b_{)" + std::to_string(j) + R"(} = )" +
                               old_rhs.to_decimal() + R"( - )" +
                               factor.to_decimal() + R"( \times )" +
@@ -486,8 +486,8 @@ std::vector<bigfloat> Matrix::solve_gauss(
     }
   }
 
-  writter.add_solution_step("Back substitution",
-                            R"(\text{Starting back substitution.})");
+  writer.add_solution_step("Back substitution",
+                           R"(\text{Starting back substitution.})");
 
   std::vector<bigfloat> result(n);
   for (int i = static_cast<int>(n) - 1; i >= 0; --i) {
@@ -497,14 +497,14 @@ std::vector<bigfloat> Matrix::solve_gauss(
     }
 
     result[i] = sum / a.at(i, i);
-    writter.add_solution_step("Back substitution step",
-                              R"(x_{)" + bigfloat(i).to_decimal() +
-                                  R"(} = \frac{)" + sum.to_decimal() + R"(}{)" +
-                                  a.at(i, i).to_decimal() + R"(} = )" +
-                                  result[i].to_decimal());
+    writer.add_solution_step("Back substitution step",
+                             R"(x_{)" + bigfloat(i).to_decimal() +
+                                 R"(} = \frac{)" + sum.to_decimal() + R"(}{)" +
+                                 a.at(i, i).to_decimal() + R"(} = )" +
+                                 result[i].to_decimal());
   }
 
-  writter.add_solution_step(
+  writer.add_solution_step(
       "Final result",
       R"(\text{System solved, final solution vector obtained.})");
   return result;
@@ -517,8 +517,8 @@ std::vector<bigfloat> Matrix::solve_gauss_jordan(
   Matrix a = *this;
   std::vector<bigfloat> x = b;
 
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Solving Ax = b via Gauss-Jordan elimination",
       R"(\text{Solving the system of linear equations using the Gauss-Jordan method with full row reduction.})");
 
@@ -529,7 +529,7 @@ std::vector<bigfloat> Matrix::solve_gauss_jordan(
     }
 
     if (pivot == n) {
-      writter.add_solution_step(
+      writer.add_solution_step(
           "No unique solution",
           R"(\text{Column } )" + std::to_string(i) +
               R"( \text{ has all zeros, no unique solution exists.})");
@@ -539,23 +539,22 @@ std::vector<bigfloat> Matrix::solve_gauss_jordan(
     if (pivot != i) {
       std::swap(a.data_[i], a.data_[pivot]);
       std::swap(x[i], x[pivot]);
-      writter.add_solution_step(
-          "Row swap", R"(\text{Swapped rows } )" + std::to_string(i) +
-                          R"( \text{ and } )" + std::to_string(pivot) +
-                          R"( \text{ to bring pivot into position.})");
+      writer.add_solution_step("Row swap",
+                               R"(\text{Swapped rows } )" + std::to_string(i) +
+                                   R"( \text{ and } )" + std::to_string(pivot) +
+                                   R"( \text{ to bring pivot into position.})");
     }
 
     bigfloat div = a.at(i, i);
-    writter.add_solution_step(
-        "Normalize pivot row",
-        R"(\text{Dividing row } )" + std::to_string(i) +
-            R"( \text{ by pivot } )" + div.to_decimal() +
-            R"( \text{ to make leading coefficient } 1.)");
+    writer.add_solution_step("Normalize pivot row",
+                             R"(\text{Dividing row } )" + std::to_string(i) +
+                                 R"( \text{ by pivot } )" + div.to_decimal() +
+                                 R"( \text{ to make leading coefficient } 1.)");
 
     for (size_t j = 0; j < n; ++j) {
       bigfloat old_val = a.at(i, j);
       a.at(i, j) /= div;
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Normalizing matrix element",
           R"(a( )" + std::to_string(i) + R"(,)" + std::to_string(j) +
               R"( ) = )" + old_val.to_decimal() + R"( \div )" +
@@ -564,7 +563,7 @@ std::vector<bigfloat> Matrix::solve_gauss_jordan(
 
     bigfloat old_rhs = x[i];
     x[i] /= div;
-    writter.add_solution_step(
+    writer.add_solution_step(
         "Normalizing RHS", R"(x[)" + std::to_string(i) + R"(] = )" +
                                old_rhs.to_decimal() + R"( \div )" +
                                div.to_decimal() + R"( = )" + x[i].to_decimal());
@@ -575,7 +574,7 @@ std::vector<bigfloat> Matrix::solve_gauss_jordan(
       }
 
       bigfloat factor = a.at(j, i);
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Eliminate element",
           R"(\text{Row } )" + std::to_string(j) + R"( \leftarrow \text{Row })" +
               std::to_string(j) + R"( - )" + factor.to_decimal() +
@@ -584,7 +583,7 @@ std::vector<bigfloat> Matrix::solve_gauss_jordan(
       for (size_t k = 0; k < n; ++k) {
         bigfloat old_value = a.at(j, k);
         a.at(j, k) -= factor * a.at(i, k);
-        writter.add_solution_step(
+        writer.add_solution_step(
             "Updating matrix element",
             R"(a()" + std::to_string(j) + R"(,)" + std::to_string(k) +
                 R"( ) = )" + old_value.to_decimal() + R"( - )" +
@@ -594,7 +593,7 @@ std::vector<bigfloat> Matrix::solve_gauss_jordan(
 
       bigfloat old_rhs_j = x[j];
       x[j] -= factor * x[i];
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Updating RHS", R"(x[)" + std::to_string(j) + R"(] = )" +
                               old_rhs_j.to_decimal() + R"( - )" +
                               factor.to_decimal() + R"( \times )" +
@@ -611,8 +610,8 @@ size_t Matrix::rank() const {
   size_t m = rows_;
   size_t n = cols_;
 
-  auto& writter = LatexWriter::get_instance();
-  writter.add_solution_step(
+  auto& writer = LatexWriter::get_instance();
+  writer.add_solution_step(
       "Rank calculation",
       R"(\text{Starting rank calculation by Gaussian elimination.})");
 
@@ -625,7 +624,7 @@ size_t Matrix::rank() const {
     }
 
     if (temp.at(sel, col) == 0) {
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Skipping column",
           R"(\text{All elements below row } )" + std::to_string(row) +
               R"( \text{ in column } )" + std::to_string(col) +
@@ -635,43 +634,43 @@ size_t Matrix::rank() const {
 
     if (sel != row) {
       std::swap(temp.data_[row], temp.data_[sel]);
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Row swap", R"(\text{Swapped rows } )" + std::to_string(row) +
                           R"( \text{ and } )" + std::to_string(sel) +
                           R"( \text{ to bring pivot into position.})");
     }
 
-    writter.add_solution_step(
+    writer.add_solution_step(
         "Pivot selected",
         R"(\text{Pivot at position } ( )" + std::to_string(row) + R"(,)" +
             std::to_string(col) + R"( ) = )" + temp.at(row, col).to_decimal());
 
     for (size_t i = row + 1; i < m; ++i) {
       bigfloat factor = temp.at(i, col) / temp.at(row, col);
-      writter.add_solution_step("Eliminating row",
-                                R"(\text{Row } )" + std::to_string(i) +
-                                    R"(\ \text{ -= } )" + factor.to_decimal() +
-                                    R"( \times \text{row } )" +
-                                    std::to_string(row));
+      writer.add_solution_step("Eliminating row",
+                               R"(\text{Row } )" + std::to_string(i) +
+                                   R"(\ \text{ -= } )" + factor.to_decimal() +
+                                   R"( \times \text{row } )" +
+                                   std::to_string(row));
 
       for (size_t j = col; j < n; ++j) {
         bigfloat before = temp.at(i, j);
         temp.at(i, j) -= factor * temp.at(row, j);
 
-        writter.add_solution_step("Updating element",
-                                  R"(\text{temp}( )" + std::to_string(i) +
-                                      R"(,)" + std::to_string(j) + R"( ) = )" +
-                                      before.to_decimal() + R"( - )" +
-                                      factor.to_decimal() + R"( \times )" +
-                                      temp.at(row, j).to_decimal() + R"( = )" +
-                                      temp.at(i, j).to_decimal());
+        writer.add_solution_step("Updating element",
+                                 R"(\text{temp}( )" + std::to_string(i) +
+                                     R"(,)" + std::to_string(j) + R"( ) = )" +
+                                     before.to_decimal() + R"( - )" +
+                                     factor.to_decimal() + R"( \times )" +
+                                     temp.at(row, j).to_decimal() + R"( = )" +
+                                     temp.at(i, j).to_decimal());
       }
     }
 
     ++rank;
     ++row;
 
-    writter.add_solution_step(
+    writer.add_solution_step(
         "Rank incremented", R"(\text{Current rank: } )" + std::to_string(rank));
   }
 
@@ -680,14 +679,14 @@ size_t Matrix::rank() const {
 
 std::vector<bigfloat> Matrix::eigenvalues(bigfloat const& EPS) const {
   check_square("eigenvalues");
-  auto& writter = LatexWriter::get_instance();
+  auto& writer = LatexWriter::get_instance();
 
   const size_t n = rows_;
   Matrix A = *this;
   const size_t MAX_ITER = 100;
 
-  writter.add_solution_step("Eigenvalues",
-                            R"(Initial\ matrix:\\ )" + A.to_latex());
+  writer.add_solution_step("Eigenvalues",
+                           R"(Initial\ matrix:\\ )" + A.to_latex());
 
   for (size_t iter = 0; iter < MAX_ITER; ++iter) {
     // QR decomposition: A = Q * R
@@ -712,7 +711,7 @@ std::vector<bigfloat> Matrix::eigenvalues(bigfloat const& EPS) const {
     Matrix R = Q.transpose() * A;
     A = R * Q;
 
-    writter.add_solution_step(
+    writer.add_solution_step(
         "Eigenvalues - Iteration " + std::to_string(iter + 1),
         "Q:\\\\ " + Q.to_latex() + R"(\\ R:\\ )" + R.to_latex() +
             R"(\\ A_{next} = R \cdot Q:\\ )" + A.to_latex());
@@ -727,8 +726,8 @@ std::vector<bigfloat> Matrix::eigenvalues(bigfloat const& EPS) const {
     }
 
     if (off_diagonal < EPS) {
-      writter.add_solution_step("Eigenvalues",
-                                R"(Converged\ matrix:\\ )" + A.to_latex());
+      writer.add_solution_step("Eigenvalues",
+                               R"(Converged\ matrix:\\ )" + A.to_latex());
       break;
     }
   }
@@ -782,19 +781,19 @@ std::vector<Vector> Matrix::eigenvectors(bigfloat const& EPS) const {
 
 size_t Matrix::span_dimension(
     const std::vector<std::vector<bigfloat>>& vectors) {
-  auto& writter = LatexWriter::get_instance();
+  auto& writer = LatexWriter::get_instance();
 
-  writter.add_solution_step(
+  writer.add_solution_step(
       "Span dimension",
       R"(\text{Constructing a matrix from input vectors to compute the dimension of their span.})");
 
   Matrix m(vectors.size(), vectors[0].size());
   for (size_t i = 0; i < vectors.size(); ++i) {
     m.data_[i] = vectors[i];
-    writter.add_solution_step(
-        "Inserting vector", R"(\text{Row } )" + std::to_string(i) +
-                                R"( = \left[)" +
-                                join_decimal_latex(vectors[i]) + R"(\right])");
+    writer.add_solution_step("Inserting vector",
+                             R"(\text{Row } )" + std::to_string(i) +
+                                 R"( = \left[)" +
+                                 join_decimal_latex(vectors[i]) + R"(\right])");
   }
 
   return m.rank();
@@ -802,24 +801,24 @@ size_t Matrix::span_dimension(
 
 bool Matrix::is_in_span(const std::vector<std::vector<bigfloat>>& basis,
                         const std::vector<bigfloat>& vector) {
-  auto& writter = LatexWriter::get_instance();
+  auto& writer = LatexWriter::get_instance();
 
-  writter.add_solution_step(
+  writer.add_solution_step(
       "Span membership check",
       R"(\text{Checking if the given vector is in the span of the basis.})");
 
   Matrix m(basis.size(), basis[0].size());
   for (size_t i = 0; i < basis.size(); ++i) {
     m.data_[i] = basis[i];
-    writter.add_solution_step("Inserting basis vector",
-                              R"(\text{Row } )" + std::to_string(i) +
-                                  R"( = \left[)" +
-                                  join_decimal_latex(basis[i]) + R"(\right])");
+    writer.add_solution_step("Inserting basis vector",
+                             R"(\text{Row } )" + std::to_string(i) +
+                                 R"( = \left[)" + join_decimal_latex(basis[i]) +
+                                 R"(\right])");
   }
 
-  writter.add_solution_step("Vector to test",
-                            R"(\text{Target vector } = \left[)" +
-                                join_decimal_latex(vector) + R"(\right])");
+  writer.add_solution_step("Vector to test",
+                           R"(\text{Target vector } = \left[)" +
+                               join_decimal_latex(vector) + R"(\right])");
 
   try {
     m.solve_gauss(vector);
@@ -832,10 +831,9 @@ bool Matrix::is_in_span(const std::vector<std::vector<bigfloat>>& basis,
 
 Matrix Matrix::transpose() const {
   Matrix result(cols_, rows_);
-  auto& writter = LatexWriter::get_instance();
+  auto& writer = LatexWriter::get_instance();
 
-  writter.add_solution_step("Transpose",
-                            R"(Original\ matrix:\\ )" + to_latex());
+  writer.add_solution_step("Transpose", R"(Original\ matrix:\\ )" + to_latex());
 
   for (size_t i = 0; i < rows_; ++i) {
     for (size_t j = 0; j < cols_; ++j) {
@@ -843,8 +841,8 @@ Matrix Matrix::transpose() const {
     }
   }
 
-  writter.add_solution_step("Transpose",
-                            R"(Transposed\ matrix:\\ )" + result.to_latex());
+  writer.add_solution_step("Transpose",
+                           R"(Transposed\ matrix:\\ )" + result.to_latex());
 
   return result;
 }

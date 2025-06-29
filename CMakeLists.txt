@@ -17,7 +17,7 @@ endif()
 include_directories(
   ${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/include/core
   ${PROJECT_SOURCE_DIR}/include/math ${PROJECT_SOURCE_DIR}/include/solver
-  ${PROJECT_SOURCE_DIR}/include/writter)
+  ${PROJECT_SOURCE_DIR}/include/writer)
 
 file(
   GLOB_RECURSE
@@ -26,7 +26,7 @@ file(
   src/core/*.cpp
   src/math/*.cpp
   src/solver/*.cpp
-  src/writter/*.cpp
+  src/writer/*.cpp
   src/logger/*.cpp)
 
 add_executable(main ${SOURCES})

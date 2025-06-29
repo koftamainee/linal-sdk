@@ -52,7 +52,7 @@ bigfloat& Vector::operator[](size_t index) {
 Vector& Vector::operator+=(const Vector& other) & {
   check_dimension(other.dimension(), "operator+=");
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Vector addition formula",
       R"((a_1, a_2, \dots, a_n) + (b_1, b_2, \dots, b_n) = (a_1 + b_1, a_2 + b_2, \dots, a_n + b_n))");
 
@@ -61,7 +61,7 @@ Vector& Vector::operator+=(const Vector& other) & {
         components_[i].to_decimal() + " + " + other.components_[i].to_decimal();
     components_[i] += other.components_[i];
     expr += " = " + components_[i].to_decimal();
-    writter->add_solution_step("Component " + std::to_string(i + 1), expr);
+    writer->add_solution_step("Component " + std::to_string(i + 1), expr);
   }
 
   return *this;
@@ -70,7 +70,7 @@ Vector& Vector::operator+=(const Vector& other) & {
 Vector& Vector::operator-=(const Vector& other) & {
   check_dimension(other.dimension(), "operator-=");
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Vector subtraction formula",
       R"((a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n))");
 
@@ -79,14 +79,14 @@ Vector& Vector::operator-=(const Vector& other) & {
         components_[i].to_decimal() + " - " + other.components_[i].to_decimal();
     components_[i] -= other.components_[i];
     expr += " = " + components_[i].to_decimal();
-    writter->add_solution_step("Component " + std::to_string(i + 1), expr);
+    writer->add_solution_step("Component " + std::to_string(i + 1), expr);
   }
 
   return *this;
 }
 
 Vector& Vector::operator*=(const bigfloat& scalar) & {
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Scalar multiplication formula",
       R"(\lambda \cdot (a_1, a_2, \dots, a_n) = (\lambda a_1, \lambda a_2, \dots, \lambda a_n))");
 
@@ -96,7 +96,7 @@ Vector& Vector::operator*=(const bigfloat& scalar) & {
     std::string expr = scalar_str + " \\cdot " + components_[i].to_decimal();
     components_[i] *= scalar;
     expr += " = " + components_[i].to_decimal();
-    writter->add_solution_step("Component " + std::to_string(i + 1), expr);
+    writer->add_solution_step("Component " + std::to_string(i + 1), expr);
   }
 
   return *this;
@@ -164,8 +164,8 @@ bigfloat Vector::dot(const Vector& other) const {
     result += components_[i] * other.components_[i];
   }
 
-  writter->add_solution_step("Dot product formula",
-                             formula + R"( = )" + result.to_decimal());
+  writer->add_solution_step("Dot product formula",
+                            formula + R"( = )" + result.to_decimal());
 
   return result;
 }
@@ -173,19 +173,19 @@ bigfloat Vector::dot(const Vector& other) const {
 bigfloat Vector::norm() const {
   check_dimension(components_.size(), "norm");
 
-  writter->add_solution_step("Norm formula",
-                             R"(\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}})");
+  writer->add_solution_step("Norm formula",
+                            R"(\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}})");
 
   bigfloat dot_res = dot(*this);
 
   std::string step = R"(\|\vec{v}\| = \sqrt{)" + dot_res.to_decimal() + "}";
 
-  writter->add_solution_step("Norm calculation", step);
+  writer->add_solution_step("Norm calculation", step);
 
   bigfloat result = sqrt(dot_res);
 
   std::string final_step = step + " = " + result.to_decimal();
-  writter->add_solution_step("Norm result", final_step);
+  writer->add_solution_step("Norm result", final_step);
 
   return result;
 }
@@ -203,39 +203,39 @@ Vector Vector::cross_3d(const Vector& other) const {
   check_dimension(3, "cross_3d");
   other.check_dimension(3, "cross_3d");
 
-  writter->add_solution_step("Cross product formula",
-                             R"(\begin{pmatrix}
-a_y b_z - a_z b_y \\ 
-a_z b_x - a_x b_z \\ 
+  writer->add_solution_step("Cross product formula",
+                            R"(\begin{pmatrix}
+a_y b_z - a_z b_y \\
+a_z b_x - a_x b_z \\
 a_x b_y - a_y b_x
 \end{pmatrix})");
 
   bigfloat x = components_[1] * other.components_[2] -
                components_[2] * other.components_[1];
-  writter->add_solution_step("X component calculation",
-                             components_[1].to_decimal() + R"( \cdot )" +
-                                 other.components_[2].to_decimal() + R"( - )" +
-                                 components_[2].to_decimal() + R"( \cdot )" +
-                                 other.components_[1].to_decimal() + R"( = )" +
-                                 x.to_decimal());
+  writer->add_solution_step("X component calculation",
+                            components_[1].to_decimal() + R"( \cdot )" +
+                                other.components_[2].to_decimal() + R"( - )" +
+                                components_[2].to_decimal() + R"( \cdot )" +
+                                other.components_[1].to_decimal() + R"( = )" +
+                                x.to_decimal());
 
   bigfloat y = components_[2] * other.components_[0] -
                components_[0] * other.components_[2];
-  writter->add_solution_step("Y component calculation",
-                             components_[2].to_decimal() + R"( \cdot )" +
-                                 other.components_[0].to_decimal() + R"( - )" +
-                                 components_[0].to_decimal() + R"( \cdot )" +
-                                 other.components_[2].to_decimal() + R"( = )" +
-                                 y.to_decimal());
+  writer->add_solution_step("Y component calculation",
+                            components_[2].to_decimal() + R"( \cdot )" +
+                                other.components_[0].to_decimal() + R"( - )" +
+                                components_[0].to_decimal() + R"( \cdot )" +
+                                other.components_[2].to_decimal() + R"( = )" +
+                                y.to_decimal());
 
   bigfloat z = components_[0] * other.components_[1] -
                components_[1] * other.components_[0];
-  writter->add_solution_step("Z component calculation",
-                             components_[0].to_decimal() + R"( \cdot )" +
-                                 other.components_[1].to_decimal() + R"( - )" +
-                                 components_[1].to_decimal() + R"( \cdot )" +
-                                 other.components_[0].to_decimal() + R"( = )" +
-                                 z.to_decimal());
+  writer->add_solution_step("Z component calculation",
+                            components_[0].to_decimal() + R"( \cdot )" +
+                                other.components_[1].to_decimal() + R"( - )" +
+                                components_[1].to_decimal() + R"( \cdot )" +
+                                other.components_[0].to_decimal() + R"( = )" +
+                                z.to_decimal());
 
   return Vector{x, y, z};
 }
@@ -244,8 +244,8 @@ Vector Vector::cross_7d(const Vector& other) const {
   check_dimension(7, "cross_7d");
   other.check_dimension(7, "cross_7d");
 
-  writter->add_solution_step("7D Cross Product Formula",
-                             R"(\begin{pmatrix}
+  writer->add_solution_step("7D Cross Product Formula",
+                            R"(\begin{pmatrix}
         a_1b_3 - a_3b_1 + a_2b_6 - a_6b_2 + a_4b_5 - a_5b_4 \\
         a_2b_4 - a_4b_2 + a_3b_0 - a_0b_3 + a_5b_6 - a_6b_5 \\
         a_3b_5 - a_5b_3 + a_4b_1 - a_1b_4 + a_6b_0 - a_0b_6 \\
@@ -263,20 +263,20 @@ Vector Vector::cross_7d(const Vector& other) const {
                components_[6] * other.components_[2] +
                components_[4] * other.components_[5] -
                components_[5] * other.components_[4];
-  writter->add_solution_step("Component 0 Calculation",
-                             components_[1].to_decimal() + R"( \cdot )" +
-                                 other.components_[3].to_decimal() + R"( - )" +
-                                 components_[3].to_decimal() + R"( \cdot )" +
-                                 other.components_[1].to_decimal() + R"( + )" +
-                                 components_[2].to_decimal() + R"( \cdot )" +
-                                 other.components_[6].to_decimal() + R"( - )" +
-                                 components_[6].to_decimal() + R"( \cdot )" +
-                                 other.components_[2].to_decimal() + R"( + )" +
-                                 components_[4].to_decimal() + R"( \cdot )" +
-                                 other.components_[5].to_decimal() + R"( - )" +
-                                 components_[5].to_decimal() + R"( \cdot )" +
-                                 other.components_[4].to_decimal() + R"( = )" +
-                                 results[0].to_decimal());
+  writer->add_solution_step("Component 0 Calculation",
+                            components_[1].to_decimal() + R"( \cdot )" +
+                                other.components_[3].to_decimal() + R"( - )" +
+                                components_[3].to_decimal() + R"( \cdot )" +
+                                other.components_[1].to_decimal() + R"( + )" +
+                                components_[2].to_decimal() + R"( \cdot )" +
+                                other.components_[6].to_decimal() + R"( - )" +
+                                components_[6].to_decimal() + R"( \cdot )" +
+                                other.components_[2].to_decimal() + R"( + )" +
+                                components_[4].to_decimal() + R"( \cdot )" +
+                                other.components_[5].to_decimal() + R"( - )" +
+                                components_[5].to_decimal() + R"( \cdot )" +
+                                other.components_[4].to_decimal() + R"( = )" +
+                                results[0].to_decimal());
 
   results[1] = components_[2] * other.components_[4] -
                components_[4] * other.components_[2] +
@@ -284,20 +284,20 @@ Vector Vector::cross_7d(const Vector& other) const {
                components_[0] * other.components_[3] +
                components_[5] * other.components_[6] -
                components_[6] * other.components_[5];
-  writter->add_solution_step("Component 1 Calculation",
-                             components_[2].to_decimal() + R"( \cdot )" +
-                                 other.components_[4].to_decimal() + R"( - )" +
-                                 components_[4].to_decimal() + R"( \cdot )" +
-                                 other.components_[2].to_decimal() + R"( + )" +
-                                 components_[3].to_decimal() + R"( \cdot )" +
-                                 other.components_[0].to_decimal() + R"( - )" +
-                                 components_[0].to_decimal() + R"( \cdot )" +
-                                 other.components_[3].to_decimal() + R"( + )" +
-                                 components_[5].to_decimal() + R"( \cdot )" +
-                                 other.components_[6].to_decimal() + R"( - )" +
-                                 components_[6].to_decimal() + R"( \cdot )" +
-                                 other.components_[5].to_decimal() + R"( = )" +
-                                 results[1].to_decimal());
+  writer->add_solution_step("Component 1 Calculation",
+                            components_[2].to_decimal() + R"( \cdot )" +
+                                other.components_[4].to_decimal() + R"( - )" +
+                                components_[4].to_decimal() + R"( \cdot )" +
+                                other.components_[2].to_decimal() + R"( + )" +
+                                components_[3].to_decimal() + R"( \cdot )" +
+                                other.components_[0].to_decimal() + R"( - )" +
+                                components_[0].to_decimal() + R"( \cdot )" +
+                                other.components_[3].to_decimal() + R"( + )" +
+                                components_[5].to_decimal() + R"( \cdot )" +
+                                other.components_[6].to_decimal() + R"( - )" +
+                                components_[6].to_decimal() + R"( \cdot )" +
+                                other.components_[5].to_decimal() + R"( = )" +
+                                results[1].to_decimal());
 
   results[2] = components_[3] * other.components_[5] -
                components_[5] * other.components_[3] +
@@ -305,20 +305,20 @@ Vector Vector::cross_7d(const Vector& other) const {
                components_[1] * other.components_[4] +
                components_[6] * other.components_[0] -
                components_[0] * other.components_[6];
-  writter->add_solution_step("Component 2 Calculation",
-                             components_[3].to_decimal() + R"( \cdot )" +
-                                 other.components_[5].to_decimal() + R"( - )" +
-                                 components_[5].to_decimal() + R"( \cdot )" +
-                                 other.components_[3].to_decimal() + R"( + )" +
-                                 components_[4].to_decimal() + R"( \cdot )" +
-                                 other.components_[1].to_decimal() + R"( - )" +
-                                 components_[1].to_decimal() + R"( \cdot )" +
-                                 other.components_[4].to_decimal() + R"( + )" +
-                                 components_[6].to_decimal() + R"( \cdot )" +
-                                 other.components_[0].to_decimal() + R"( - )" +
-                                 components_[0].to_decimal() + R"( \cdot )" +
-                                 other.components_[6].to_decimal() + R"( = )" +
-                                 results[2].to_decimal());
+  writer->add_solution_step("Component 2 Calculation",
+                            components_[3].to_decimal() + R"( \cdot )" +
+                                other.components_[5].to_decimal() + R"( - )" +
+                                components_[5].to_decimal() + R"( \cdot )" +
+                                other.components_[3].to_decimal() + R"( + )" +
+                                components_[4].to_decimal() + R"( \cdot )" +
+                                other.components_[1].to_decimal() + R"( - )" +
+                                components_[1].to_decimal() + R"( \cdot )" +
+                                other.components_[4].to_decimal() + R"( + )" +
+                                components_[6].to_decimal() + R"( \cdot )" +
+                                other.components_[0].to_decimal() + R"( - )" +
+                                components_[0].to_decimal() + R"( \cdot )" +
+                                other.components_[6].to_decimal() + R"( = )" +
+                                results[2].to_decimal());
 
   results[3] = components_[4] * other.components_[6] -
                components_[6] * other.components_[4] +
@@ -326,20 +326,20 @@ Vector Vector::cross_7d(const Vector& other) const {
                components_[2] * other.components_[5] +
                components_[0] * other.components_[1] -
                components_[1] * other.components_[0];
-  writter->add_solution_step("Component 3 Calculation",
-                             components_[4].to_decimal() + R"( \cdot )" +
-                                 other.components_[6].to_decimal() + R"( - )" +
-                                 components_[6].to_decimal() + R"( \cdot )" +
-                                 other.components_[4].to_decimal() + R"( + )" +
-                                 components_[5].to_decimal() + R"( \cdot )" +
-                                 other.components_[2].to_decimal() + R"( - )" +
-                                 components_[2].to_decimal() + R"( \cdot )" +
-                                 other.components_[5].to_decimal() + R"( + )" +
-                                 components_[0].to_decimal() + R"( \cdot )" +
-                                 other.components_[1].to_decimal() + R"( - )" +
-                                 components_[1].to_decimal() + R"( \cdot )" +
-                                 other.components_[0].to_decimal() + R"( = )" +
-                                 results[3].to_decimal());
+  writer->add_solution_step("Component 3 Calculation",
+                            components_[4].to_decimal() + R"( \cdot )" +
+                                other.components_[6].to_decimal() + R"( - )" +
+                                components_[6].to_decimal() + R"( \cdot )" +
+                                other.components_[4].to_decimal() + R"( + )" +
+                                components_[5].to_decimal() + R"( \cdot )" +
+                                other.components_[2].to_decimal() + R"( - )" +
+                                components_[2].to_decimal() + R"( \cdot )" +
+                                other.components_[5].to_decimal() + R"( + )" +
+                                components_[0].to_decimal() + R"( \cdot )" +
+                                other.components_[1].to_decimal() + R"( - )" +
+                                components_[1].to_decimal() + R"( \cdot )" +
+                                other.components_[0].to_decimal() + R"( = )" +
+                                results[3].to_decimal());
 
   results[4] = components_[5] * other.components_[0] -
                components_[0] * other.components_[5] +
@@ -347,20 +347,20 @@ Vector Vector::cross_7d(const Vector& other) const {
                components_[3] * other.components_[6] +
                components_[1] * other.components_[2] -
                components_[2] * other.components_[1];
-  writter->add_solution_step("Component 4 Calculation",
-                             components_[5].to_decimal() + R"( \cdot )" +
-                                 other.components_[0].to_decimal() + R"( - )" +
-                                 components_[0].to_decimal() + R"( \cdot )" +
-                                 other.components_[5].to_decimal() + R"( + )" +
-                                 components_[6].to_decimal() + R"( \cdot )" +
-                                 other.components_[3].to_decimal() + R"( - )" +
-                                 components_[3].to_decimal() + R"( \cdot )" +
-                                 other.components_[6].to_decimal() + R"( + )" +
-                                 components_[1].to_decimal() + R"( \cdot )" +
-                                 other.components_[2].to_decimal() + R"( - )" +
-                                 components_[2].to_decimal() + R"( \cdot )" +
-                                 other.components_[1].to_decimal() + R"( = )" +
-                                 results[4].to_decimal());
+  writer->add_solution_step("Component 4 Calculation",
+                            components_[5].to_decimal() + R"( \cdot )" +
+                                other.components_[0].to_decimal() + R"( - )" +
+                                components_[0].to_decimal() + R"( \cdot )" +
+                                other.components_[5].to_decimal() + R"( + )" +
+                                components_[6].to_decimal() + R"( \cdot )" +
+                                other.components_[3].to_decimal() + R"( - )" +
+                                components_[3].to_decimal() + R"( \cdot )" +
+                                other.components_[6].to_decimal() + R"( + )" +
+                                components_[1].to_decimal() + R"( \cdot )" +
+                                other.components_[2].to_decimal() + R"( - )" +
+                                components_[2].to_decimal() + R"( \cdot )" +
+                                other.components_[1].to_decimal() + R"( = )" +
+                                results[4].to_decimal());
 
   results[5] = components_[6] * other.components_[1] -
                components_[1] * other.components_[6] +
@@ -368,20 +368,20 @@ Vector Vector::cross_7d(const Vector& other) const {
                components_[4] * other.components_[0] +
                components_[2] * other.components_[3] -
                components_[3] * other.components_[2];
-  writter->add_solution_step("Component 5 Calculation",
-                             components_[6].to_decimal() + R"( \cdot )" +
-                                 other.components_[1].to_decimal() + R"( - )" +
-                                 components_[1].to_decimal() + R"( \cdot )" +
-                                 other.components_[6].to_decimal() + R"( + )" +
-                                 components_[0].to_decimal() + R"( \cdot )" +
-                                 other.components_[4].to_decimal() + R"( - )" +
-                                 components_[4].to_decimal() + R"( \cdot )" +
-                                 other.components_[0].to_decimal() + R"( + )" +
-                                 components_[2].to_decimal() + R"( \cdot )" +
-                                 other.components_[3].to_decimal() + R"( - )" +
-                                 components_[3].to_decimal() + R"( \cdot )" +
-                                 other.components_[2].to_decimal() + R"( = )" +
-                                 results[5].to_decimal());
+  writer->add_solution_step("Component 5 Calculation",
+                            components_[6].to_decimal() + R"( \cdot )" +
+                                other.components_[1].to_decimal() + R"( - )" +
+                                components_[1].to_decimal() + R"( \cdot )" +
+                                other.components_[6].to_decimal() + R"( + )" +
+                                components_[0].to_decimal() + R"( \cdot )" +
+                                other.components_[4].to_decimal() + R"( - )" +
+                                components_[4].to_decimal() + R"( \cdot )" +
+                                other.components_[0].to_decimal() + R"( + )" +
+                                components_[2].to_decimal() + R"( \cdot )" +
+                                other.components_[3].to_decimal() + R"( - )" +
+                                components_[3].to_decimal() + R"( \cdot )" +
+                                other.components_[2].to_decimal() + R"( = )" +
+                                results[5].to_decimal());
 
   results[6] = components_[0] * other.components_[2] -
                components_[2] * other.components_[0] +
@@ -389,20 +389,20 @@ Vector Vector::cross_7d(const Vector& other) const {
                components_[5] * other.components_[1] +
                components_[3] * other.components_[4] -
                components_[4] * other.components_[3];
-  writter->add_solution_step("Component 6 Calculation",
-                             components_[0].to_decimal() + R"( \cdot )" +
-                                 other.components_[2].to_decimal() + R"( - )" +
-                                 components_[2].to_decimal() + R"( \cdot )" +
-                                 other.components_[0].to_decimal() + R"( + )" +
-                                 components_[1].to_decimal() + R"( \cdot )" +
-                                 other.components_[5].to_decimal() + R"( - )" +
-                                 components_[5].to_decimal() + R"( \cdot )" +
-                                 other.components_[1].to_decimal() + R"( + )" +
-                                 components_[3].to_decimal() + R"( \cdot )" +
-                                 other.components_[4].to_decimal() + R"( - )" +
-                                 components_[4].to_decimal() + R"( \cdot )" +
-                                 other.components_[3].to_decimal() + R"( = )" +
-                                 results[6].to_decimal());
+  writer->add_solution_step("Component 6 Calculation",
+                            components_[0].to_decimal() + R"( \cdot )" +
+                                other.components_[2].to_decimal() + R"( - )" +
+                                components_[2].to_decimal() + R"( \cdot )" +
+                                other.components_[0].to_decimal() + R"( + )" +
+                                components_[1].to_decimal() + R"( \cdot )" +
+                                other.components_[5].to_decimal() + R"( - )" +
+                                components_[5].to_decimal() + R"( \cdot )" +
+                                other.components_[1].to_decimal() + R"( + )" +
+                                components_[3].to_decimal() + R"( \cdot )" +
+                                other.components_[4].to_decimal() + R"( - )" +
+                                components_[4].to_decimal() + R"( \cdot )" +
+                                other.components_[3].to_decimal() + R"( = )" +
+                                results[6].to_decimal());
 
   return Vector{results[0], results[1], results[2], results[3],
                 results[4], results[5], results[6]};
@@ -428,7 +428,7 @@ bigfloat Vector::triple_product_7d(const Vector& a, const Vector& b,
 
 std::vector<Vector> Vector::gram_schmidt_process(
     const std::vector<Vector>& vectors, const bigfloat& EPS) {
-  auto& writter = LatexWriter::get_instance();
+  auto& writer = LatexWriter::get_instance();
 
   if (vectors.empty()) {
     return {};
@@ -448,12 +448,12 @@ std::vector<Vector> Vector::gram_schmidt_process(
       }
     }
     math += " \\}";
-    writter.add_solution_step(desc, math);
+    writer.add_solution_step(desc, math);
   }
 
   for (size_t i = 0; i < vectors.size(); ++i) {
     Vector u = vectors[i];
-    writter.add_solution_step(
+    writer.add_solution_step(
         "Take vector \\(\\vec{v}_{" + std::to_string(i + 1) + "}\\):",
         u.to_latex());
 
@@ -461,7 +461,7 @@ std::vector<Vector> Vector::gram_schmidt_process(
       const Vector& e = ortho_basis[j];
       bigfloat proj_coeff = vectors[i].dot(e) / e.dot(e);
 
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Calculate projection coefficient of \\(\\vec{v}_{" +
               std::to_string(i + 1) +
               R"(}\) onto orthonormal vector \(\vec{u}_{)" +
@@ -472,31 +472,31 @@ std::vector<Vector> Vector::gram_schmidt_process(
               "}} = " + proj_coeff.to_decimal());
 
       Vector proj = e * proj_coeff;
-      writter.add_solution_step("Projection vector:", proj.to_latex());
+      writer.add_solution_step("Projection vector:", proj.to_latex());
 
       u -= proj;
 
-      writter.add_solution_step("Subtract projection from \\(\\vec{u}_{" +
-                                    std::to_string(i + 1) +
-                                    "}\\), resulting in:",
-                                u.to_latex());
+      writer.add_solution_step("Subtract projection from \\(\\vec{u}_{" +
+                                   std::to_string(i + 1) +
+                                   "}\\), resulting in:",
+                               u.to_latex());
     }
 
     if (!u.is_zero()) {
       Vector u_norm = u.normalize(EPS);
       ortho_basis.push_back(u_norm);
 
-      writter.add_solution_step("Normalize \\(\\vec{u}_{" +
-                                    std::to_string(i + 1) +
-                                    "}\\) to obtain orthonormal vector:",
-                                u_norm.to_latex());
+      writer.add_solution_step("Normalize \\(\\vec{u}_{" +
+                                   std::to_string(i + 1) +
+                                   "}\\) to obtain orthonormal vector:",
+                               u_norm.to_latex());
     }
 
     else {
       Vector zero_vector = Vector::zero(vectors[i].dimension());
       ortho_basis.push_back(zero_vector);
 
-      writter.add_solution_step(
+      writer.add_solution_step(
           "Vector \\(\\vec{v}_{" + std::to_string(i + 1) +
               "}\\) is linearly dependent and replaced with a zero vector.",
           zero_vector.to_latex());
@@ -533,31 +533,31 @@ Vector Vector::basis_vector(size_t dimension, size_t index) {
 bigfloat angle_between(const Vector& a, const Vector& b, const bigfloat& EPS) {
   a.check_dimension(b.dimension(), "angle_between");
 
-  auto* writter = &LatexWriter::get_instance();
+  auto* writer = &LatexWriter::get_instance();
 
-  writter->add_solution_step("Check zero vectors",
-                             R"(\text{Vector } a \text{ is zero: } )" +
-                                 std::string(a.is_zero() ? "true" : "false") +
-                                 R"(, \text{Vector } b \text{ is zero: } )" +
-                                 std::string(b.is_zero() ? "true" : "false"));
+  writer->add_solution_step("Check zero vectors",
+                            R"(\text{Vector } a \text{ is zero: } )" +
+                                std::string(a.is_zero() ? "true" : "false") +
+                                R"(, \text{Vector } b \text{ is zero: } )" +
+                                std::string(b.is_zero() ? "true" : "false"));
 
   if (a.is_zero() || b.is_zero()) {
     throw std::domain_error("Angle with zero vector is undefined");
   }
 
   const bigfloat dot_product = a.dot(b);
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Dot product calculation",
       R"(\vec{a} \cdot \vec{b} = )" + dot_product.to_decimal());
 
   const bigfloat norm_a = a.norm();
   const bigfloat norm_b = b.norm();
-  writter->add_solution_step("Norms calculation",
-                             R"(\|\vec{a}\| = )" + norm_a.to_decimal() +
-                                 R"(, \|\vec{b}\| = )" + norm_b.to_decimal());
+  writer->add_solution_step("Norms calculation",
+                            R"(\|\vec{a}\| = )" + norm_a.to_decimal() +
+                                R"(, \|\vec{b}\| = )" + norm_b.to_decimal());
 
   const bigfloat norms_product = norm_a * norm_b;
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Product of norms",
       R"(\|\vec{a}\| \times \|\vec{b}\| = )" + norms_product.to_decimal());
 
@@ -566,13 +566,14 @@ bigfloat angle_between(const Vector& a, const Vector& b, const bigfloat& EPS) {
   }
 
   const bigfloat cos_theta = dot_product / norms_product;
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Cosine of angle",
       R"(\cos\theta = \frac{\vec{a} \cdot \vec{b}}{\|\vec{a}\| \|\vec{b}\|} = )" +
           cos_theta.to_decimal());
 
-  bigfloat angle = arccos(cos_theta, EPS);
-  writter->add_solution_step(
+  bigfloat angle = arccos(
+      cos_theta, EPS * 1000);  // TODO: it's kinda bad (speed up arccos pls)
+  writer->add_solution_step(
       "Angle calculation",
       R"(\theta = \arccos(\cos\theta) = )" + angle.to_decimal());
 

@@ -79,7 +79,7 @@ bigint &bigint::from_string(std::string const &str, std::size_t base) {
   }
 
   if (start_pos == str.size()) {
-    throw std::invalid_argument("string contains only a sign character");
+    return *this = str[0] == '-' ? -1 : 1;
   }
 
   for (size_t i = start_pos; i < str.size(); ++i) {

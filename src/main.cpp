@@ -44,13 +44,23 @@ int main(int argc, char** argv) {
 
   std::string compile_command =
       "xelatex -interaction=nonstopmode > /dev/null " + tex_file;
+
+  std::cout << "Starting LaTeX compilation via XeLaTeX...\n";
+
+  auto start = std::chrono::steady_clock::now();
+
   int compile_result = system(compile_command.c_str());
 
-  if (compile_result != 0) {
-    std::cerr << "Error: LaTeX compilation failed\n";
-    return 1;
-  }
+  auto end = std::chrono::steady_clock::now();
+  std::chrono::duration<double> elapsed_seconds = end - start;
 
+  if (compile_result == 0) {
+    std::cout << "Successfully generated " << pdf_file << " in "
+              << elapsed_seconds.count() << " seconds\n";
+  } else {
+    std::cout << "Compilation failed with error code: " << compile_result
+              << "\n";
+  }
   try {
     // fs::remove(tex_file);
     fs::remove(base_name + "-solved.aux");
@@ -60,6 +70,5 @@ int main(int argc, char** argv) {
               << "\n";
   }
 
-  std::cout << "Successfully generated " << pdf_file << "\n";
   return 0;
 }

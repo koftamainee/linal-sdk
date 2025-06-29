@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <string>
 
+#include "latex_writer.h"
+
 Line2D::Line2D(const Vector& a, const Vector& b, bool is_two_points)
     : point_(a), direction_(is_two_points ? (b - a) : b) {
   if (a.dimension() != 2 || b.dimension() != 2) {
@@ -36,13 +38,13 @@ Line2D::Line2D(const std::string& str) {
     point_ = Vector{x0, y0};
     direction_ = Vector{a, b};
 
-    writter->add_solution_step("Parsing parametric line equation",
-                               R"(\text{Given: } x = )" + x0.to_decimal() +
-                                   R"( + )" + a.to_decimal() +
-                                   R"( t, \quad y = )" + y0.to_decimal() +
-                                   R"( + )" + b.to_decimal() + R"( t)");
+    writer->add_solution_step("Parsing parametric line equation",
+                              R"(\text{Given: } x = )" + x0.to_decimal() +
+                                  R"( + )" + a.to_decimal() +
+                                  R"( t, \quad y = )" + y0.to_decimal() +
+                                  R"( + )" + b.to_decimal() + R"( t)");
 
-    writter->add_solution_step(
+    writer->add_solution_step(
         "Extracted point and direction vectors",
         R"(\mathbf{point} = \begin{pmatrix})" + x0.to_decimal() + R"( \\ )" +
             y0.to_decimal() + R"(\end{pmatrix}, \quad
@@ -72,18 +74,18 @@ Line2D::Line2D(const std::string& str) {
     point_ = Vector{bigfloat(0), -C / B};
     direction_ = Vector{-B, A};
 
-    writter->add_solution_step("Parsing general line equation",
-                               R"(\text{Given: } )" + A.to_decimal() +
-                                   R"(x + )" + B.to_decimal() + R"(y + )" +
-                                   C.to_decimal() + R"( = 0)");
+    writer->add_solution_step("Parsing general line equation",
+                              R"(\text{Given: } )" + A.to_decimal() +
+                                  R"(x + )" + B.to_decimal() + R"(y + )" +
+                                  C.to_decimal() + R"( = 0)");
 
-    writter->add_solution_step("Normal vector and direction vector",
-                               R"(\mathbf{n} = \begin{pmatrix})" +
-                                   A.to_decimal() + R"( \\ )" + B.to_decimal() +
-                                   R"(\end{pmatrix}, \quad
+    writer->add_solution_step("Normal vector and direction vector",
+                              R"(\mathbf{n} = \begin{pmatrix})" +
+                                  A.to_decimal() + R"( \\ )" + B.to_decimal() +
+                                  R"(\end{pmatrix}, \quad
            \mathbf{direction} = \begin{pmatrix})" +
-                                   (-B).to_decimal() + R"( \\ )" +
-                                   A.to_decimal() + R"(\end{pmatrix})");
+                                  (-B).to_decimal() + R"( \\ )" +
+                                  A.to_decimal() + R"(\end{pmatrix})");
 
     normalize_direction();
     check_valid_line();
@@ -102,26 +104,26 @@ Line2D::GeneralForm Line2D::get_general_form() const {
   bigfloat B = -direction_[0];
   bigfloat C = -(A * point_[0] + B * point_[1]);
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "General form derivation",
       R"(\text{Direction vector: } \vec{d} = \begin{pmatrix})" +
           direction_[0].to_decimal() + R"( \\ )" + direction_[1].to_decimal() +
           R"(\end{pmatrix})");
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Coefficients A, B, C for Ax + By + C = 0",
       R"(A = )" + A.to_decimal() + R"(,\quad B = )" + B.to_decimal() +
           R"(,\quad C = - (A \cdot x_0 + B \cdot y_0) = )" + C.to_decimal());
 
-  writter->add_solution_step("General form", A.to_decimal() + "x + " +
-                                                 B.to_decimal() + "y + " +
-                                                 C.to_decimal() + " = 0");
+  writer->add_solution_step("General form", A.to_decimal() + "x + " +
+                                                B.to_decimal() + "y + " +
+                                                C.to_decimal() + " = 0");
 
   return {.A = A, .B = B, .C = C};
 }
 
 Line2D::ParametricForm Line2D::get_parametric_form() const {
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Parametric form",
       R"(\vec{r}(t) = \vec{p} + t \cdot \vec{d} = \begin{pmatrix})" +
           point_[0].to_decimal() + R"( \\ )" + point_[1].to_decimal() +
@@ -133,7 +135,7 @@ Line2D::ParametricForm Line2D::get_parametric_form() const {
 }
 
 Line2D::CanonicalForm Line2D::get_canonical_form() const {
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Canonical form", R"(\frac{x - )" + point_[0].to_decimal() + R"(}{)" +
                             direction_[0].to_decimal() + R"(} = \frac{y - )" +
                             point_[1].to_decimal() + R"(}{)" +
@@ -154,16 +156,16 @@ Line2D::NormalForm Line2D::get_normal_form() const {
     p = -p;
   }
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Normal form derivation",
       R"(\|\vec{n}\| = \sqrt{A^2 + B^2} = )" + norm.to_decimal() +
           R"(,\quad p = \frac{|C|}{\|\vec{n}\|} = )" + p.to_decimal());
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Angle α of normal vector",
       R"(\alpha = \arctan{\left(\frac{B}{A}\right)} = )" + alpha.to_decimal());
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Normal form", R"(x \cos\alpha + y \sin\alpha = )" + p.to_decimal());
 
   return {.p = p, .alpha = alpha};
@@ -171,7 +173,7 @@ Line2D::NormalForm Line2D::get_normal_form() const {
 
 Line2D::SlopeInterceptForm Line2D::get_slope_intercept_form() const {
   if (direction_[0] == bigfloat(0)) {
-    writter->add_solution_step(
+    writer->add_solution_step(
         "Slope-intercept form: vertical line",
         R"(\text{Line is vertical, } x = )" + point_[0].to_decimal());
     return {.k = bigfloat(0),
@@ -183,12 +185,12 @@ Line2D::SlopeInterceptForm Line2D::get_slope_intercept_form() const {
   bigfloat k = direction_[1] / direction_[0];
   bigfloat b = point_[1] - k * point_[0];
 
-  writter->add_solution_step("Slope k and intercept b",
-                             R"(k = \frac{d_y}{d_x} = )" + k.to_decimal() +
-                                 R"(,\quad b = y_0 - k \cdot x_0 = )" +
-                                 b.to_decimal());
+  writer->add_solution_step("Slope k and intercept b",
+                            R"(k = \frac{d_y}{d_x} = )" + k.to_decimal() +
+                                R"(,\quad b = y_0 - k \cdot x_0 = )" +
+                                b.to_decimal());
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Slope-intercept form",
       R"(y = )" + k.to_decimal() + R"(x + )" + b.to_decimal());
 
@@ -199,7 +201,7 @@ std::optional<Vector> Line2D::intersect(const Line2D& other) const {
   GeneralForm form1 = get_general_form();
   GeneralForm form2 = other.get_general_form();
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "General forms of the lines",
       R"(\text{Line 1: } )" + form1.A.to_decimal() + R"(x + )" +
           form1.B.to_decimal() + R"(y + )" + form1.C.to_decimal() + R"( = 0)" +
@@ -208,7 +210,7 @@ std::optional<Vector> Line2D::intersect(const Line2D& other) const {
 
   bigfloat det = form1.A * form2.B - form1.B * form2.A;
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Determinant calculation",
       R"(\text{Det} = A_1 B_2 - B_1 A_2 = )" + form1.A.to_decimal() +
           R"( \cdot )" + form2.B.to_decimal() + R"( - )" +
@@ -216,7 +218,7 @@ std::optional<Vector> Line2D::intersect(const Line2D& other) const {
           R"( = )" + det.to_decimal());
 
   if (det == bigfloat(0)) {
-    writter->add_solution_step(
+    writer->add_solution_step(
         "Lines are parallel",
         R"(\text{Since } \det = 0, \text{ the lines are parallel or coincident. No unique intersection.})");
     return std::nullopt;
@@ -225,7 +227,7 @@ std::optional<Vector> Line2D::intersect(const Line2D& other) const {
   bigfloat x = (form1.B * form2.C - form1.C * form2.B) / det;
   bigfloat y = (form1.C * form2.A - form1.A * form2.C) / det;
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Intersection point calculation",
       R"(x = \frac{B_1 C_2 - C_1 B_2}{\det} = \frac{)" + form1.B.to_decimal() +
           R"( \cdot )" + form2.C.to_decimal() + R"( - )" +
@@ -238,10 +240,10 @@ std::optional<Vector> Line2D::intersect(const Line2D& other) const {
           form2.C.to_decimal() + R"(}{)" + det.to_decimal() + R"(} = )" +
           y.to_decimal());
 
-  writter->add_solution_step("Intersection result",
-                             R"(\text{Intersection point: } \begin{pmatrix})" +
-                                 x.to_decimal() + R"( \\ )" + y.to_decimal() +
-                                 R"(\end{pmatrix})");
+  writer->add_solution_step("Intersection result",
+                            R"(\text{Intersection point: } \begin{pmatrix})" +
+                                x.to_decimal() + R"( \\ )" + y.to_decimal() +
+                                R"(\end{pmatrix})");
 
   return Vector({x, y});
 }
@@ -261,13 +263,13 @@ bool Line2D::contains_point(const Vector& point, const bigfloat& EPS) const {
 bigfloat Line2D::distance_to_point(const Vector& point) const {
   GeneralForm form = get_general_form();
 
-  writter->add_solution_step("General form of the line",
-                             R"(\text{Line: } )" + form.A.to_decimal() +
-                                 R"(x + )" + form.B.to_decimal() + R"(y + )" +
-                                 form.C.to_decimal() + R"( = 0)");
+  writer->add_solution_step("General form of the line",
+                            R"(\text{Line: } )" + form.A.to_decimal() +
+                                R"(x + )" + form.B.to_decimal() + R"(y + )" +
+                                form.C.to_decimal() + R"( = 0)");
 
   bigfloat numerator = (form.A * point[0] + form.B * point[1] + form.C).abs();
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Numerator calculation (absolute value of line equation at point)",
       R"(\left| A x_0 + B y_0 + C \right| = \left| )" + form.A.to_decimal() +
           R"( \cdot )" + point[0].to_decimal() + R"( + )" +
@@ -277,13 +279,13 @@ bigfloat Line2D::distance_to_point(const Vector& point) const {
 
   bigfloat denominator =
       sqrt(form.A * form.A + form.B * form.B, bigfloat::DEFAULT_EPS);
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Denominator calculation (norm of vector (A, B))",
       R"(\sqrt{A^2 + B^2} = \sqrt{)" + form.A.to_decimal() + R"(^2 + )" +
           form.B.to_decimal() + R"(^2} = )" + denominator.to_decimal());
 
   bigfloat distance = numerator / denominator;
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Distance calculation",
       R"(\text{Distance} = \frac{\text{Numerator}}{\text{Denominator}} = \frac{)" +
           numerator.to_decimal() + R"(}{)" + denominator.to_decimal() +
@@ -429,36 +431,73 @@ void Line2D::check_valid_line() const {
 
 bool is_point_on_segment(const Vector& pt, const Vector& a, const Vector& b,
                          const bigfloat& EPS) {
-  Vector ab = b - a;
-  Vector ap = pt - a;
-  if (!are_collinear(ab, ap)) {
-    return false;
-  }
-  bigfloat dot1 = ab.dot(ap);
-  bigfloat dot2 = ab.dot(ab);
-  return dot1 >= -EPS && dot1 <= dot2 + EPS;
-}
-
-bigfloat point_to_segment_distance(const Vector& pt, const Vector& a,
-                                   const Vector& b) {
-  auto* writter = &LatexWriter::get_instance();
-  writter->add_solution_step(
+  auto* writer = &LatexWriter::get_instance();
+  writer->add_solution_step(
       "Input points",
       R"(\text{Point } P = \begin{pmatrix})" + pt[0].to_decimal() + R"( \\ )" +
-          pt[1].to_decimal() + R"(\end{pmatrix}, 
+          pt[1].to_decimal() + R"(\end{pmatrix},
       \text{Segment endpoints } A = \begin{pmatrix})" +
           a[0].to_decimal() + R"( \\ )" + a[1].to_decimal() +
           R"(\end{pmatrix}, B = \begin{pmatrix})" + b[0].to_decimal() +
           R"( \\ )" + b[1].to_decimal() + R"(\end{pmatrix})");
 
   Vector ab = b - a;
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Vector AB calculation",
       R"(\vec{AB} = \vec{B} - \vec{A} = \begin{pmatrix})" + ab[0].to_decimal() +
           R"( \\ )" + ab[1].to_decimal() + R"(\end{pmatrix})");
 
   Vector ap = pt - a;
-  writter->add_solution_step(
+  writer->add_solution_step(
+      "Vector AP calculation",
+      R"(\vec{AP} = \vec{P} - \vec{A} = \begin{pmatrix})" + ap[0].to_decimal() +
+          R"( \\ )" + ap[1].to_decimal() + R"(\end{pmatrix})");
+
+  bool collinear = are_collinear(ab, ap);
+  writer->add_solution_step("Collinearity check",
+                            std::string("Are vectors AB and AP collinear? ") +
+                                (collinear ? "Yes" : "No"));
+
+  if (!collinear) {
+    return false;
+  }
+
+  bigfloat dot1 = ab.dot(ap);
+  bigfloat dot2 = ab.dot(ab);
+
+  writer->add_solution_step(
+      "Dot product values",
+      R"(\vec{AB} \cdot \vec{AP} = )" + dot1.to_decimal() +
+          R"(, \quad \vec{AB} \cdot \vec{AB} = )" + dot2.to_decimal());
+
+  bool on_segment = (dot1 >= -EPS) && (dot1 <= dot2 + EPS);
+  writer->add_solution_step("Parameter t range check",
+                            std::string("Is t in [0,1] (with epsilon)? ") +
+                                (on_segment ? "Yes" : "No"));
+
+  return on_segment;
+}
+
+bigfloat point_to_segment_distance(const Vector& pt, const Vector& a,
+                                   const Vector& b) {
+  auto* writer = &LatexWriter::get_instance();
+  writer->add_solution_step(
+      "Input points",
+      R"(\text{Point } P = \begin{pmatrix})" + pt[0].to_decimal() + R"( \\ )" +
+          pt[1].to_decimal() + R"(\end{pmatrix},
+      \text{Segment endpoints } A = \begin{pmatrix})" +
+          a[0].to_decimal() + R"( \\ )" + a[1].to_decimal() +
+          R"(\end{pmatrix}, B = \begin{pmatrix})" + b[0].to_decimal() +
+          R"( \\ )" + b[1].to_decimal() + R"(\end{pmatrix})");
+
+  Vector ab = b - a;
+  writer->add_solution_step(
+      "Vector AB calculation",
+      R"(\vec{AB} = \vec{B} - \vec{A} = \begin{pmatrix})" + ab[0].to_decimal() +
+          R"( \\ )" + ab[1].to_decimal() + R"(\end{pmatrix})");
+
+  Vector ap = pt - a;
+  writer->add_solution_step(
       "Vector AP calculation",
       R"(\vec{AP} = \vec{P} - \vec{A} = \begin{pmatrix})" + ap[0].to_decimal() +
           R"( \\ )" + ap[1].to_decimal() + R"(\end{pmatrix})");
@@ -466,23 +505,23 @@ bigfloat point_to_segment_distance(const Vector& pt, const Vector& a,
   bigfloat numerator = ap.dot(ab);
   bigfloat denominator = ab.dot(ab);
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Dot products", R"(\vec{AP} \cdot \vec{AB} = )" + numerator.to_decimal() +
                           R"(, \quad \vec{AB} \cdot \vec{AB} = )" +
                           denominator.to_decimal());
 
   bigfloat t = numerator / denominator;
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Initial parameter t calculation",
       R"(t = \frac{\vec{AP} \cdot \vec{AB}}{\vec{AB} \cdot \vec{AB}} = )" +
           t.to_decimal());
 
   t = std::max(bigfloat(0), std::min(bigfloat(1), t));
-  writter->add_solution_step("Clamping t to [0, 1]",
-                             R"(t = \max(0, \min(1, t)) = )" + t.to_decimal());
+  writer->add_solution_step("Clamping t to [0, 1]",
+                            R"(t = \max(0, \min(1, t)) = )" + t.to_decimal());
 
   Vector projection = a + t * ab;
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Projection point on segment",
       R"(\vec{P}_{proj} = \vec{A} + t \vec{AB} = \begin{pmatrix})" +
           projection[0].to_decimal() + R"( \\ )" + projection[1].to_decimal() +
@@ -513,11 +552,42 @@ std::optional<bigfloat> Line2D::triangle_area_with_axes() const {
 
 std::optional<Vector> Line2D::intersect_with_segment(const Vector& a,
                                                      const Vector& b) const {
+  writer->add_solution_step(
+      "Input segment points",
+      R"(\text{Segment endpoints } A = \begin{pmatrix})" + a[0].to_decimal() +
+          R"( \\ )" + a[1].to_decimal() +
+          R"(\end{pmatrix}, B = \begin{pmatrix})" + b[0].to_decimal() +
+          R"( \\ )" + b[1].to_decimal() + R"(\end{pmatrix})");
+
   Line2D segment_line(a, b, true);
+  writer->add_solution_step("Construct segment line",
+                            R"(\text{Line created from segment endpoints})");
+
   auto ipt = intersect(segment_line);
-  if (ipt && is_point_on_segment(*ipt, a, b)) {
+
+  if (!ipt) {
+    writer->add_solution_step(
+        "Intersection check",
+        R"(\text{Lines do not intersect or are parallel/coincident.})");
+    return std::nullopt;
+  }
+
+  writer->add_solution_step("Intersection point found",
+                            R"(\text{Intersection point: } \begin{pmatrix})" +
+                                ipt.value()[0].to_decimal() + R"( \\ )" +
+                                ipt.value()[1].to_decimal() +
+                                R"(\end{pmatrix})");
+
+  bool on_segment = is_point_on_segment(*ipt, a, b);
+  writer->add_solution_step(
+      "Segment inclusion check",
+      std::string(R"(\text{Is the intersection point on the segment? } )") +
+          (on_segment ? R"(\text{Yes})" : R"(\text{No})"));
+
+  if (on_segment) {
     return ipt;
   }
+
   return std::nullopt;
 }
 
@@ -532,13 +602,13 @@ std::optional<Vector> Line2D::intersect_segments(const Vector& a1,
                                                  const Vector& a2,
                                                  const Vector& b1,
                                                  const Vector& b2) {
-  auto* writter = &LatexWriter::get_instance();
-  writter->add_solution_step(
+  auto* writer = &LatexWriter::get_instance();
+  writer->add_solution_step(
       "Input segments",
       R"(\text{Segment 1: } \begin{pmatrix})" + a1[0].to_decimal() + R"( \\ )" +
           a1[1].to_decimal() + R"( \end{pmatrix} \text{ to } \begin{pmatrix})" +
           a2[0].to_decimal() + R"( \\ )" + a2[1].to_decimal() +
-          R"(\end{pmatrix}, 
+          R"(\end{pmatrix},
         \text{Segment 2: } \begin{pmatrix})" +
           b1[0].to_decimal() + R"( \\ )" + b1[1].to_decimal() +
           R"(\end{pmatrix} \text{ to } \begin{pmatrix})" + b2[0].to_decimal() +
@@ -547,8 +617,8 @@ std::optional<Vector> Line2D::intersect_segments(const Vector& a1,
   Line2D l1(a1, a2, true);
   Line2D l2(b1, b2, true);
 
-  writter->add_solution_step("Constructing Line2D objects",
-                             "Created lines from segments endpoints");
+  writer->add_solution_step("Constructing Line2D objects",
+                            "Created lines from segments endpoints");
 
   auto ipt = l1.intersect(l2);
 
@@ -556,16 +626,16 @@ std::optional<Vector> Line2D::intersect_segments(const Vector& a1,
     return std::nullopt;
   }
 
-  writter->add_solution_step("Intersection point found",
-                             R"(\text{Intersection point: } \begin{pmatrix})" +
-                                 ipt.value()[0].to_decimal() + R"( \\ )" +
-                                 ipt.value()[1].to_decimal() +
-                                 R"(\end{pmatrix})");
+  writer->add_solution_step("Intersection point found",
+                            R"(\text{Intersection point: } \begin{pmatrix})" +
+                                ipt.value()[0].to_decimal() + R"( \\ )" +
+                                ipt.value()[1].to_decimal() +
+                                R"(\end{pmatrix})");
 
   bool on_seg1 = is_point_on_segment(*ipt, a1, a2);
   bool on_seg2 = is_point_on_segment(*ipt, b1, b2);
 
-  writter->add_solution_step(
+  writer->add_solution_step(
       "Checking if intersection is on segments",
       std::string(R"(\text{On segment 1: } )") + (on_seg1 ? "true" : "false") +
           R"(, \text{On segment 2: } )" + (on_seg2 ? "true" : "false"));

@@ -4,7 +4,7 @@
 #include <string>
 
 #include "bigfloat.h"
-#include "latex_writter.h"
+#include "latex_writer.h"
 #include "vector.h"
 
 class Line2D {
@@ -13,7 +13,7 @@ class Line2D {
   Vector point_;
   Vector direction_;
 
-  LatexWriter* writter = &LatexWriter::get_instance();
+  LatexWriter* writer = &LatexWriter::get_instance();
 
   void normalize_direction();
   void check_valid_line() const;

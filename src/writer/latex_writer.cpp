@@ -1,4 +1,4 @@
-#include "writter/latex_writter.h"
+#include "writer/latex_writer.h"
 
 LatexWriter* LatexWriter::instance = nullptr;
 
