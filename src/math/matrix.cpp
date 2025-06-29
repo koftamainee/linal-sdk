@@ -846,3 +846,87 @@ Matrix Matrix::transpose() const {
 
   return result;
 }
+
+Vector Matrix::nullspace_vector(const bigfloat& EPS) const {
+  size_t m = rows_;
+  size_t n = cols_;
+
+  std::vector<std::vector<bigfloat>> mat(m, std::vector<bigfloat>(n));
+  for (size_t i = 0; i < m; ++i) {
+    for (size_t j = 0; j < n; ++j) {
+      mat[i][j] = data_[i][j];
+    }
+  }
+
+  size_t rank = 0;
+  std::vector<int> pivot_col(m, -1);
+  for (size_t col = 0; col < n && rank < m; ++col) {
+    size_t pivot_row = rank;
+    for (size_t i = rank + 1; i < m; ++i) {
+      if (mat[i][col].abs() > mat[pivot_row][col].abs()) {
+        pivot_row = i;
+      }
+    }
+
+    if (mat[pivot_row][col].abs() < EPS) {
+      continue;
+    }
+
+    if (pivot_row != rank) {
+      std::swap(mat[pivot_row], mat[rank]);
+    }
+
+    bigfloat pivot_val = mat[rank][col];
+    for (size_t j = col; j < n; ++j) {
+      mat[rank][j] /= pivot_val;
+    }
+
+    for (size_t i = 0; i < m; ++i) {
+      if (i != rank && mat[i][col].abs() > EPS) {
+        bigfloat factor = mat[i][col];
+        for (size_t j = col; j < n; ++j) {
+          mat[i][j] -= factor * mat[rank][j];
+        }
+      }
+    }
+
+    pivot_col[rank] = static_cast<int>(col);
+    ++rank;
+  }
+
+  if (rank == n) {
+    return Vector(n);
+  }
+
+  std::vector<bigfloat> nullvec(n, bigfloat(0));
+
+  std::vector<bool> is_pivot_col(n, false);
+  for (size_t i = 0; i < rank; ++i) {
+    if (pivot_col[i] >= 0) {
+      is_pivot_col[pivot_col[i]] = true;
+    }
+  }
+
+  size_t free_col = 0;
+  for (; free_col < n; ++free_col) {
+    if (!is_pivot_col[free_col]) {
+      break;
+    }
+  }
+  nullvec[free_col] = bigfloat(1);
+
+  for (int i = static_cast<int>(rank) - 1; i >= 0; --i) {
+    int pc = pivot_col[i];
+    if (pc == -1) {
+      continue;
+    }
+
+    bigfloat sum = 0;
+    for (size_t j = pc + 1; j < n; ++j) {
+      sum += mat[i][j] * nullvec[j];
+    }
+    nullvec[pc] = -sum;
+  }
+
+  return nullvec;
+}

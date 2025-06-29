@@ -42,6 +42,11 @@ class Solver {
   void solve_distance_point_to_segment(const std::string& data);
   void solve_segment_segment_intersection(const std::string& data);
 
+  void solve_distance_point_to_line_nd(const std::string& data);
+  void solve_symmetric_point_nd(const std::string& data);
+  void solve_line_equations_nd(const std::string& data);
+  void solve_points_collinearity_nd(const std::string& data);
+
  public:
   Solver();
 

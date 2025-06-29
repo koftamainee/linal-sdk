@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "line_2d.h"
+#include "line_nd.h"
 #include "matrix.h"
 #include "vector.h"
 
@@ -219,6 +220,27 @@ bool Solver::process_file(const std::string& input_path) {
       std::cout << "Solving segment-segment intersection...\n";
       writer.write_line("\\subsection*{Segment and segment intersection}");
       solve_segment_segment_intersection(line);
+
+    } else if (task_type == "DISTANCE_POINT_TO_LINE_ND") {
+      std::cout << "Solving distance from point to line in N-D...\n";
+      writer.write_line("\\subsection*{Distance from point to line in N-D}");
+      solve_distance_point_to_line_nd(line);
+
+    } else if (task_type == "SYMMETRIC_POINT_ND") {
+      std::cout << "Solving symmetric point relative to line in N-D...\n";
+      writer.write_line(
+          "\\subsection*{Symmetric point relative to line in N-D}");
+      solve_symmetric_point_nd(line);
+
+    } else if (task_type == "LINE_EQUATIONS_ND") {
+      std::cout << "Solving line equations in N-D...\n";
+      writer.write_line("\\subsection*{Line equations in N-D}");
+      solve_line_equations_nd(line);
+
+    } else if (task_type == "POINTS_COLLINEARITY_ND") {
+      std::cout << "Checking points collinearity in N-D...\n";
+      writer.write_line("\\subsection*{Points collinearity in N-D}");
+      solve_points_collinearity_nd(line);
     } else {
       throw std::runtime_error("Unknown task type: " + task_type);
     }
@@ -1125,4 +1147,120 @@ void Solver::solve_segment_segment_intersection(const std::string& data) {
   }
 
   writer.add_solution_step("Intersection", "Point: " + pt.value().to_string());
+}
+
+void Solver::solve_distance_point_to_line_nd(const std::string& data) {
+  const std::string prefix = "DISTANCE_POINT_TO_LINE_ND ";
+  size_t pos = data.find(prefix);
+  if (pos == std::string::npos) {
+    throw std::invalid_argument("Missing prefix");
+  }
+
+  std::string input = data.substr(pos + prefix.size());
+  // Разделяем по '|'
+  size_t sep_pos = input.find('|');
+  if (sep_pos == std::string::npos) {
+    throw std::invalid_argument(
+        "Expected '|' separator between line and point");
+  }
+
+  std::string line_str = input.substr(0, sep_pos);
+  std::string point_str = input.substr(sep_pos + 1);
+
+  LineND line(line_str);
+  Vector point(point_str);
+
+  bigfloat dist = line.distance_to_point(point);
+
+  writer.add_solution_step("Distance from point to line",
+                           "Distance = " + dist.to_decimal());
+}
+
+void Solver::solve_symmetric_point_nd(const std::string& data) {
+  const std::string prefix = "SYMMETRIC_POINT_ND ";
+  size_t pos = data.find(prefix);
+  if (pos == std::string::npos) {
+    throw std::invalid_argument("Missing prefix");
+  }
+
+  std::string input = data.substr(pos + prefix.size());
+
+  size_t sep_pos = input.find('|');
+  if (sep_pos == std::string::npos) {
+    throw std::invalid_argument(
+        "Expected '|' separator between line and point");
+  }
+
+  std::string line_str = input.substr(0, sep_pos);
+  std::string point_str = input.substr(sep_pos + 1);
+
+  LineND line(line_str);
+  Vector point(point_str);
+
+  Vector sym_point = line.symmetric_point(point);
+
+  writer.add_solution_step("Symmetric point",
+                           "Symmetric point: " + sym_point.to_string());
+}
+
+void Solver::solve_line_equations_nd(const std::string& data) {
+  const std::string prefix = "LINE_EQUATIONS_ND ";
+  size_t pos = data.find(prefix);
+  if (pos == std::string::npos) {
+    throw std::invalid_argument("Missing prefix");
+  }
+
+  std::string line_str = data.substr(pos + prefix.size());
+
+  LineND line(line_str);
+
+  auto param = line.get_parametric_form();
+  auto canon = line.get_canonical_form();
+  auto sys = line.get_system_form();
+
+  writer.add_solution_step("Parametric form", param.to_string());
+  writer.add_solution_step("Canonical form", canon.to_string());
+  writer.add_solution_step("System form", sys.to_string());
+}
+
+void Solver::solve_points_collinearity_nd(const std::string& data) {
+  const std::string prefix = "POINTS_COLLINEARITY_ND ";
+  size_t pos = data.find(prefix);
+  if (pos == std::string::npos) {
+    throw std::invalid_argument("Missing prefix");
+  }
+
+  std::string input = data.substr(pos + prefix.size());
+
+  size_t sep_pos = input.find('|');
+  if (sep_pos != std::string::npos) {
+    input = input.substr(0, sep_pos);
+  }
+
+  std::regex vec_regex(R"(\(([^()]+)\))");
+  std::sregex_iterator iter(input.begin(), input.end(), vec_regex);
+  std::sregex_iterator end;
+
+  std::vector<Vector> points;
+  for (; iter != end; ++iter) {
+    points.emplace_back(iter->str().substr(1, iter->str().size() - 2));
+  }
+
+  if (points.size() < 2) {
+    throw std::invalid_argument("At least two points are required");
+  }
+
+  LineND line = LineND::from_two_points(points[0], points[1]);
+
+  bool all_on_line = true;
+  for (size_t i = 2; i < points.size(); ++i) {
+    if (!line.contains_point(points[i])) {
+      all_on_line = false;
+      break;
+    }
+  }
+
+  writer.add_solution_step("Collinearity check",
+                           all_on_line ? "All points lie on the same line"
+                                       : "Points do NOT lie on the same line");
 }
