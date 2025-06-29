@@ -873,7 +873,7 @@ C_{2,2} = (7 \times 156) + (8 \times 2) + (9 \times 347) = 4231
 \medskip
 
 \[
-\begin{pmatrix}1 & 2 & 52 \\ 48 & 5 & 6 \\ 7 & -12515 & 9\end{pmatrix}^{-1} = \begin{pmatrix}-0.0024108849 & 0.0208823996 & 0.0000079576 \\ 0.0000125140 & 0.0000113910 & -0.0000798975 \\ 0.0192766510 & -0.0004020227 & 0.0000029199\end{pmatrix}
+\begin{pmatrix}1 & 2 & 52 \\ 48 & 5 & 6 \\ 7 & 12515 & 9\end{pmatrix}^{-1} = \begin{pmatrix}-0.0024108849 & 0.0208823996 & 0.0000079576 \\ 0.0000125140 & 0.0000113910 & -0.0000798975 \\ 0.0192766510 & -0.0004020227 & 0.0000029199\end{pmatrix}
 \]
 \bigskip
 
@@ -897,7 +897,7 @@ a_{1,0} = 124125 - 124125 \times 1 = 0
 \]
 \subsection*{ \vspace{1em} Updating matrix element}
 \[
-a_{1,1} = 5 - 124125 \times -12515 = 1553424380
+a_{1,1} = 5 - 124125 \times 12515 = 1553424380
 \]
 \subsection*{ \vspace{1em} Updating matrix element}
 \[
@@ -917,7 +917,7 @@ a_{2,0} = 7 - 7 \times 1 = 0
 \]
 \subsection*{ \vspace{1em} Updating matrix element}
 \[
-a_{2,1} = 8 - 7 \times -12515 = 87613
+a_{2,1} = 8 - 7 \times 12515 = 87613
 \]
 \subsection*{ \vspace{1em} Updating matrix element}
 \[
@@ -965,7 +965,7 @@ x_{0} = \frac{0.0000322416}{1} = 0.0000322416
 \]
 \medskip
 
-Solving the system $\begin{pmatrix}1 & -12515 & 3 \\ 124125 & 5 & 6 \\ 7 & 8 & 29841928419\end{pmatrix}\vec{x} = \begin{pmatrix}5 \\ 4 \\ 1\end{pmatrix}$ using Gaussian elimination:
+Solving the system $\begin{pmatrix}1 & 12515 & 3 \\ 124125 & 5 & 6 \\ 7 & 8 & 29841928419\end{pmatrix}\vec{x} = \begin{pmatrix}5 \\ 4 \\ 1\end{pmatrix}$ using Gaussian elimination:
 \[
 \vec{x} = \begin{pmatrix}0.0000322416 \\ -0.0003995179 \\ 0.0000000000\end{pmatrix}
 \]
@@ -991,7 +991,7 @@ a( 0,0 ) = 1 \div 1 = 1
 \]
 \subsection*{ \vspace{1em} Normalizing matrix element}
 \[
-a( 0,1 ) = -12515 \div 1 = -12515
+a( 0,1 ) = 12515 \div 1 = -12515
 \]
 \subsection*{ \vspace{1em} Normalizing matrix element}
 \[
@@ -1163,7 +1163,7 @@ x[1] = -0.0003995179 - -0.0002397084 \times 0.0000000000 = -0.0003995179
 \]
 \medskip
 
-Solving the system $\begin{pmatrix}1 & -12515 & 3 \\ 124125 & 5 & 6 \\ 7 & 8 & 29841928419\end{pmatrix}\vec{x} = \begin{pmatrix}5 \\ 4 \\ 1\end{pmatrix}$ using Gauss-Jordan elimination:
+Solving the system $\begin{pmatrix}1 & 12515 & 3 \\ 124125 & 5 & 6 \\ 7 & 8 & 29841928419\end{pmatrix}\vec{x} = \begin{pmatrix}5 \\ 4 \\ 1\end{pmatrix}$ using Gauss-Jordan elimination:
 \[
 \vec{x} = \begin{pmatrix}0.0000322416 \\ -0.0003995179 \\ 0.0000000000\end{pmatrix}
 \]
@@ -1376,20 +1376,673 @@ Solving the system $\begin{pmatrix}1 & -12515 & 3 \\ 124125 & 5 & 6 \\ 7 & 8 & 2
 \]
 \subsection*{ \vspace{1em} Inserting basis vector}
 \[
-\text{Row } 0 = \left[1, 2, 3\right]
+\text{Row } 0 = \left[4, 5, 6\right]
 \]
 \subsection*{ \vspace{1em} Inserting basis vector}
 \[
-\text{Row } 1 = \left[4, 5, 6\right]
+\text{Row } 1 = \left[7, 8, 9\right]
 \]
 \subsection*{ \vspace{1em} Vector to test}
 \[
-\text{Target vector } = \left[7, 8, 9\right]
+\text{Target vector } = \left[1, 2, 3\right]
 \]
 \medskip
 
-Checking whether vector $\begin{pmatrix}7 \\ 8 \\ 9\end{pmatrix}$ belongs to the span:
+Checking whether vector $\begin{pmatrix}1 \\ 2 \\ 3\end{pmatrix}$ belongs to the span:
 Result: \text{does not belong}
+\bigskip
+
+\hrulefill
+\bigskip
+
+\section*{Task 21}
+
+\subsection*{All line equations}
+\subsection*{ \vspace{1em} Parsing general line equation}
+\[
+\text{Given: } 2x + 3y + 5 = 0
+\]
+\subsection*{ \vspace{1em} Normal vector and direction vector}
+\[
+\mathbf{n} = \begin{pmatrix}2 \\ 3\end{pmatrix}, \quad
+           \mathbf{direction} = \begin{pmatrix}-3 \\ 2\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+-3 \cdot -3 + 2 \cdot 2 = 13
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{13}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{13} = 3.6055512754
+\]
+\subsection*{ \vspace{1em} Input equation}
+\[
+\texttt{2x + 3y + 5 = 0}
+\]
+\subsection*{ \vspace{1em} General form derivation}
+\[
+\text{Direction vector: } \vec{d} = \begin{pmatrix}-0.8320502943 \\ 0.5547001962\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Coefficients A, B, C for Ax + By + C = 0}
+\[
+A = 0.5547001962,\quad B = 0.8320502943,\quad C = - (A \cdot x_0 + B \cdot y_0) = 1.3867504905
+\]
+\subsection*{ \vspace{1em} General form}
+\[
+0.5547001962x + 0.8320502943y + 1.3867504905 = 0
+\]
+\subsection*{ \vspace{1em} General form of the line}
+\[
+0.5547001962x + 0.8320502943y + 1.3867504905 = 0
+\]
+\subsection*{ \vspace{1em} Parametric form}
+\[
+\vec{r}(t) = \vec{p} + t \cdot \vec{d} = \begin{pmatrix}0 \\ -1.6666666666\end{pmatrix} + t \cdot \begin{pmatrix}-0.8320502943 \\ 0.5547001962\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Parametric form of the line}
+\[
+\vec{r} = \begin{pmatrix}0 \\ -1.6666666666\end{pmatrix} + t \cdot \begin{pmatrix}-0.8320502943 \\ 0.5547001962\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Canonical form}
+\[
+\frac{x - 0}{-0.8320502943} = \frac{y - -1.6666666666}{0.5547001962}
+\]
+\subsection*{ \vspace{1em} Canonical form of the line}
+\[
+\frac{x - 0}{-0.8320502943} = \frac{y - -1.6666666666}{0.5547001962}
+\]
+\subsection*{ \vspace{1em} General form derivation}
+\[
+\text{Direction vector: } \vec{d} = \begin{pmatrix}-0.8320502943 \\ 0.5547001962\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Coefficients A, B, C for Ax + By + C = 0}
+\[
+A = 0.5547001962,\quad B = 0.8320502943,\quad C = - (A \cdot x_0 + B \cdot y_0) = 1.3867504905
+\]
+\subsection*{ \vspace{1em} General form}
+\[
+0.5547001962x + 0.8320502943y + 1.3867504905 = 0
+\]
+\subsection*{ \vspace{1em} Normal form derivation}
+\[
+\|\vec{n}\| = \sqrt{A^2 + B^2} = 0.9999999999,\quad p = \frac{|C|}{\|\vec{n}\|} = 1.3867504905
+\]
+\subsection*{ \vspace{1em} Angle α of normal vector}
+\[
+\alpha = \arctan{\left(\frac{B}{A}\right)} = 0.9827937285
+\]
+\subsection*{ \vspace{1em} Normal form}
+\[
+x \cos\alpha + y \sin\alpha = 1.3867504905
+\]
+\subsection*{ \vspace{1em} Normal form of the line}
+\[
+x\cos(0.9827937285) + y\sin(0.9827937285) = 1.3867504905
+\]
+\subsection*{ \vspace{1em} Slope k and intercept b}
+\[
+k = \frac{d_y}{d_x} = -0.6666666666,\quad b = y_0 - k \cdot x_0 = -1.6666666666
+\]
+\subsection*{ \vspace{1em} Slope-intercept form}
+\[
+y = -0.6666666666x + -1.6666666666
+\]
+\subsection*{ \vspace{1em} Slope-intercept form of the line}
+\[
+y = -0.6666666666x + -1.6666666666
+\]
+\bigskip
+
+\hrulefill
+\bigskip
+
+\section*{Task 22}
+
+\subsection*{Intersection of two lines}
+\subsection*{ \vspace{1em} Given equations}
+\[
+\texttt{2x + 3y + 5 = 0}) \\ \texttt{5x + 16y + 8 = 0}
+\]
+\subsection*{ \vspace{1em} Parsing general line equation}
+\[
+\text{Given: } 2x + 3y + 5 = 0
+\]
+\subsection*{ \vspace{1em} Normal vector and direction vector}
+\[
+\mathbf{n} = \begin{pmatrix}2 \\ 3\end{pmatrix}, \quad
+           \mathbf{direction} = \begin{pmatrix}-3 \\ 2\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+-3 \cdot -3 + 2 \cdot 2 = 13
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{13}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{13} = 3.6055512754
+\]
+\subsection*{ \vspace{1em} Parsing general line equation}
+\[
+\text{Given: } 5x + 16y + 8 = 0
+\]
+\subsection*{ \vspace{1em} Normal vector and direction vector}
+\[
+\mathbf{n} = \begin{pmatrix}5 \\ 16\end{pmatrix}, \quad
+           \mathbf{direction} = \begin{pmatrix}-16 \\ 5\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+-16 \cdot -16 + 5 \cdot 5 = 281
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{281}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{281} = 16.7630546142
+\]
+\subsection*{ \vspace{1em} Parsing equations}
+\[
+\text{Converting to internal representation}
+\]
+\subsection*{ \vspace{1em} General form derivation}
+\[
+\text{Direction vector: } \vec{d} = \begin{pmatrix}-0.8320502943 \\ 0.5547001962\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Coefficients A, B, C for Ax + By + C = 0}
+\[
+A = 0.5547001962,\quad B = 0.8320502943,\quad C = - (A \cdot x_0 + B \cdot y_0) = 1.3867504905
+\]
+\subsection*{ \vspace{1em} General form}
+\[
+0.5547001962x + 0.8320502943y + 1.3867504905 = 0
+\]
+\subsection*{ \vspace{1em} General form derivation}
+\[
+\text{Direction vector: } \vec{d} = \begin{pmatrix}-0.9544799780 \\ 0.2982749931\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Coefficients A, B, C for Ax + By + C = 0}
+\[
+A = 0.2982749931,\quad B = 0.9544799780,\quad C = - (A \cdot x_0 + B \cdot y_0) = 0.4772399890
+\]
+\subsection*{ \vspace{1em} General form}
+\[
+0.2982749931x + 0.9544799780y + 0.4772399890 = 0
+\]
+\subsection*{ \vspace{1em} General forms of the lines}
+\[
+\text{Line 1: } 0.5547001962x + 0.8320502943y + 1.3867504905 = 0
+\text{Line 2: } 0.2982749931x + 0.9544799780y + 0.4772399890 = 0
+\]
+\subsection*{ \vspace{1em} Determinant calculation}
+\[
+\text{Det} = A_1 B_2 - B_1 A_2 = 0.5547001962 \cdot 0.9544799780 - 0.8320502943 \cdot 0.2982749931 = 0.2812704352
+\]
+\subsection*{ \vspace{1em} Intersection point calculation}
+\[
+x = \frac{B_1 C_2 - C_1 B_2}{\det} = \frac{0.8320502943 \cdot 0.4772399890 - 1.3867504905 \cdot 0.9544799780}{0.2812704352} = -3.2941176470\\y = \frac{C_1 A_2 - A_1 C_2}{\det} = \frac{1.3867504905 \cdot 0.2982749931 - 0.5547001962 \cdot 0.4772399890}{0.2812704352} = 0.5294117647
+\]
+\subsection*{ \vspace{1em} Intersection result}
+\[
+\text{Intersection point: } \begin{pmatrix}-3.2941176470 \\ 0.5294117647\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Intersection point}
+\[
+\text{The lines intersect at: } \mathbf{p} = \begin{pmatrix}-3.2941176470 \\ 0.5294117647\end{pmatrix}
+\]
+\bigskip
+
+\hrulefill
+\bigskip
+
+\section*{Task 23}
+
+\subsection*{Distance from point to line}
+\subsection*{ \vspace{1em} Input}
+\[
+Equation: 3x + 4y - 10 = 0 , Point:  (2 3)
+\]
+\subsection*{ \vspace{1em} Parsing general line equation}
+\[
+\text{Given: } 3x + 4y + 10 = 0
+\]
+\subsection*{ \vspace{1em} Normal vector and direction vector}
+\[
+\mathbf{n} = \begin{pmatrix}3 \\ 4\end{pmatrix}, \quad
+           \mathbf{direction} = \begin{pmatrix}-4 \\ 3\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+-4 \cdot -4 + 3 \cdot 3 = 25
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{25}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{25} = 5.0000000000
+\]
+\subsection*{ \vspace{1em} General form derivation}
+\[
+\text{Direction vector: } \vec{d} = \begin{pmatrix}-0.7999999999 \\ 0.5999999999\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Coefficients A, B, C for Ax + By + C = 0}
+\[
+A = 0.5999999999,\quad B = 0.7999999999,\quad C = - (A \cdot x_0 + B \cdot y_0) = -1.9999999999
+\]
+\subsection*{ \vspace{1em} General form}
+\[
+0.5999999999x + 0.7999999999y + -1.9999999999 = 0
+\]
+\subsection*{ \vspace{1em} General form of the line}
+\[
+\text{Line: } 0.5999999999x + 0.7999999999y + -1.9999999999 = 0
+\]
+\subsection*{ \vspace{1em} Numerator calculation (absolute value of line equation at point)}
+\[
+\left| A x_0 + B y_0 + C \right| = \left| 0.5999999999 \cdot 2 + 0.7999999999 \cdot 3 + -1.9999999999 \right| = 1.5999999999
+\]
+\subsection*{ \vspace{1em} Denominator calculation (norm of vector (A, B))}
+\[
+\sqrt{A^2 + B^2} = \sqrt{0.5999999999^2 + 0.7999999999^2} = 0.9999999999
+\]
+\subsection*{ \vspace{1em} Distance calculation}
+\[
+\text{Distance} = \frac{\text{Numerator}}{\text{Denominator}} = \frac{1.5999999999}{0.9999999999} = 1.5999999999
+\]
+\subsection*{ \vspace{1em} Distance}
+\[
+Distance = 1.5999999999
+\]
+\bigskip
+
+\hrulefill
+\bigskip
+
+\section*{Task 24}
+
+\subsection*{Triangle area formed with axes}
+\subsection*{ \vspace{1em} Parsing general line equation}
+\[
+\text{Given: } 1x + 2y + 6 = 0
+\]
+\subsection*{ \vspace{1em} Normal vector and direction vector}
+\[
+\mathbf{n} = \begin{pmatrix}1 \\ 2\end{pmatrix}, \quad
+           \mathbf{direction} = \begin{pmatrix}-2 \\ 1\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+-2 \cdot -2 + 1 \cdot 1 = 5
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{5}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{5} = 2.2360679774
+\]
+\subsection*{ \vspace{1em} General form derivation}
+\[
+\text{Direction vector: } \vec{d} = \begin{pmatrix}-0.8944271909 \\ 0.4472135954\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Coefficients A, B, C for Ax + By + C = 0}
+\[
+A = 0.4472135954,\quad B = 0.8944271909,\quad C = - (A \cdot x_0 + B \cdot y_0) = -2.6832815729
+\]
+\subsection*{ \vspace{1em} General form}
+\[
+0.4472135954x + 0.8944271909y + -2.6832815729 = 0
+\]
+\subsection*{ \vspace{1em} Triangle area}
+\[
+Area = 9
+\]
+\bigskip
+
+\hrulefill
+\bigskip
+
+\section*{Task 25}
+
+\subsection*{Distance from point to segment}
+\subsection*{ \vspace{1em} Input points}
+\[
+\text{Point } P = \begin{pmatrix}3 \\ 4\end{pmatrix}, 
+      \text{Segment endpoints } A = \begin{pmatrix}0 \\ 0\end{pmatrix}, B = \begin{pmatrix}6 \\ 0\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+6 - 0 = 6
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+0 - 0 = 0
+\]
+\subsection*{ \vspace{1em} Vector AB calculation}
+\[
+\vec{AB} = \vec{B} - \vec{A} = \begin{pmatrix}6 \\ 0\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+3 - 0 = 3
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+4 - 0 = 4
+\]
+\subsection*{ \vspace{1em} Vector AP calculation}
+\[
+\vec{AP} = \vec{P} - \vec{A} = \begin{pmatrix}3 \\ 4\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+3 \cdot 6 + 4 \cdot 0 = 18
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+6 \cdot 6 + 0 \cdot 0 = 36
+\]
+\subsection*{ \vspace{1em} Dot products}
+\[
+\vec{AP} \cdot \vec{AB} = 18, \quad \vec{AB} \cdot \vec{AB} = 36
+\]
+\subsection*{ \vspace{1em} Initial parameter t calculation}
+\[
+t = \frac{\vec{AP} \cdot \vec{AB}}{\vec{AB} \cdot \vec{AB}} = 0.5
+\]
+\subsection*{ \vspace{1em} Clamping t to [0, 1]}
+\[
+t = \max(0, \min(1, t)) = 0.5
+\]
+\subsection*{ \vspace{1em} Scalar multiplication formula}
+\[
+\lambda \cdot (a_1, a_2, \dots, a_n) = (\lambda a_1, \lambda a_2, \dots, \lambda a_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+0.5 \cdot 6 = 3
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+0.5 \cdot 0 = 0
+\]
+\subsection*{ \vspace{1em} Vector addition formula}
+\[
+(a_1, a_2, \dots, a_n) + (b_1, b_2, \dots, b_n) = (a_1 + b_1, a_2 + b_2, \dots, a_n + b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+0 + 3 = 3
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+0 + 0 = 0
+\]
+\subsection*{ \vspace{1em} Projection point on segment}
+\[
+\vec{P}_{proj} = \vec{A} + t \vec{AB} = \begin{pmatrix}3 \\ 0\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+3 - 3 = 0
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+4 - 0 = 4
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+0 \cdot 0 + 4 \cdot 4 = 16
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{16}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{16} = 4
+\]
+\subsection*{ \vspace{1em} Distance}
+\[
+Distance = 4
+\]
+\bigskip
+
+\hrulefill
+\bigskip
+
+\section*{Task 26}
+
+\subsection*{Segment and segment intersection}
+\subsection*{ \vspace{1em} Input segments}
+\[
+\text{Segment 1: } \begin{pmatrix}0 \\ 0 \end{pmatrix} \text{ to } \begin{pmatrix}2 \\ 2\end{pmatrix}, 
+        \text{Segment 2: } \begin{pmatrix}0 \\ 2\end{pmatrix} \text{ to } \begin{pmatrix}2 \\ 0\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+2 - 0 = 2
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+2 - 0 = 2
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+2 \cdot 2 + 2 \cdot 2 = 8
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{8}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{8} = 2.8284271247
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+2 - 0 = 2
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+0 - 2 = -2
+\]
+\subsection*{ \vspace{1em} Norm formula}
+\[
+\|\vec{v}\| = \sqrt{\vec{v} \cdot \vec{v}}
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+2 \cdot 2 + -2 \cdot -2 = 8
+\]
+\subsection*{ \vspace{1em} Norm calculation}
+\[
+\|\vec{v}\| = \sqrt{8}
+\]
+\subsection*{ \vspace{1em} Norm result}
+\[
+\|\vec{v}\| = \sqrt{8} = 2.8284271247
+\]
+\subsection*{ \vspace{1em} Constructing Line2D objects}
+\[
+Created lines from segments endpoints
+\]
+\subsection*{ \vspace{1em} General form derivation}
+\[
+\text{Direction vector: } \vec{d} = \begin{pmatrix}0.7071067811 \\ 0.7071067811\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Coefficients A, B, C for Ax + By + C = 0}
+\[
+A = 0.7071067811,\quad B = -0.7071067811,\quad C = - (A \cdot x_0 + B \cdot y_0) = -0
+\]
+\subsection*{ \vspace{1em} General form}
+\[
+0.7071067811x + -0.7071067811y + -0 = 0
+\]
+\subsection*{ \vspace{1em} General form derivation}
+\[
+\text{Direction vector: } \vec{d} = \begin{pmatrix}0.7071067811 \\ -0.7071067811\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Coefficients A, B, C for Ax + By + C = 0}
+\[
+A = -0.7071067811,\quad B = -0.7071067811,\quad C = - (A \cdot x_0 + B \cdot y_0) = 1.4142135623
+\]
+\subsection*{ \vspace{1em} General form}
+\[
+-0.7071067811x + -0.7071067811y + 1.4142135623 = 0
+\]
+\subsection*{ \vspace{1em} General forms of the lines}
+\[
+\text{Line 1: } 0.7071067811x + -0.7071067811y + -0 = 0
+\text{Line 2: } -0.7071067811x + -0.7071067811y + 1.4142135623 = 0
+\]
+\subsection*{ \vspace{1em} Determinant calculation}
+\[
+\text{Det} = A_1 B_2 - B_1 A_2 = 0.7071067811 \cdot -0.7071067811 - -0.7071067811 \cdot -0.7071067811 = -0.9999999999
+\]
+\subsection*{ \vspace{1em} Intersection point calculation}
+\[
+x = \frac{B_1 C_2 - C_1 B_2}{\det} = \frac{-0.7071067811 \cdot 1.4142135623 - -0 \cdot -0.7071067811}{-0.9999999999} = 1\\y = \frac{C_1 A_2 - A_1 C_2}{\det} = \frac{-0 \cdot -0.7071067811 - 0.7071067811 \cdot 1.4142135623}{-0.9999999999} = 1
+\]
+\subsection*{ \vspace{1em} Intersection result}
+\[
+\text{Intersection point: } \begin{pmatrix}1 \\ 1\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Intersection point found}
+\[
+\text{Intersection point: } \begin{pmatrix}1 \\ 1\end{pmatrix}
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+2 - 0 = 2
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+2 - 0 = 2
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+1 - 0 = 1
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+1 - 0 = 1
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+2 \cdot 1 + 2 \cdot 1 = 4
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+2 \cdot 2 + 2 \cdot 2 = 8
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+2 - 0 = 2
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+0 - 2 = -2
+\]
+\subsection*{ \vspace{1em} Vector subtraction formula}
+\[
+(a_1, a_2, \dots, a_n) - (b_1, b_2, \dots, b_n) = (a_1 - b_1, a_2 - b_2, \dots, a_n - b_n)
+\]
+\subsection*{ \vspace{1em} Component 1}
+\[
+1 - 0 = 1
+\]
+\subsection*{ \vspace{1em} Component 2}
+\[
+1 - 2 = -1
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+2 \cdot 1 + -2 \cdot -1 = 4
+\]
+\subsection*{ \vspace{1em} Dot product formula}
+\[
+2 \cdot 2 + -2 \cdot -2 = 8
+\]
+\subsection*{ \vspace{1em} Checking if intersection is on segments}
+\[
+\text{On segment 1: } true, \text{On segment 2: } true
+\]
+\subsection*{ \vspace{1em} Intersection}
+\[
+Point: [1, 1]
+\]
 \bigskip
 
 \hrulefill

@@ -31,6 +31,7 @@ class bigfloat final {
   bigfloat(bigint const &numerator, bigint const &denominator);
   bigfloat(bigint const &other);
   bigfloat(int other);
+  bigfloat(std::string const &str);
   bigfloat(bigfloat const &other) = default;
   bigfloat(bigfloat &&other) noexcept = default;
   ~bigfloat() noexcept = default;

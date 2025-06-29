@@ -84,3 +84,9 @@ bigfloat angle_between(const Vector& a, const Vector& b,
                        const bigfloat& EPS = bigfloat::DEFAULT_EPS);
 bool are_orthogonal(const Vector& a, const Vector& b);
 bool are_collinear(const Vector& a, const Vector& b);
+
+bool is_point_on_segment(const Vector& pt, const Vector& a, const Vector& b,
+                         const bigfloat& EPS = bigfloat::DEFAULT_EPS);
+
+bigfloat point_to_segment_distance(const Vector& pt, const Vector& a,
+                                   const Vector& b);

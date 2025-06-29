@@ -89,3 +89,51 @@ std::string bigfloat::to_decimal(size_t precision) const {
 
   return result;
 }
+
+bigfloat::bigfloat(std::string const &str) {
+  std::string s;
+  for (const auto c : str) {
+    if (c != ' ') {
+      s.push_back(c);
+    }
+  }
+
+  auto slash_pos = s.find('/');
+  if (slash_pos != std::string::npos) {
+    std::string num_str = s.substr(0, slash_pos);
+    std::string den_str = s.substr(slash_pos + 1);
+
+    if (num_str.empty() || den_str.empty()) {
+      throw std::invalid_argument("Invalid fraction format");
+    }
+
+    numerator_ = bigint(num_str.c_str());
+    denominator_ = bigint(den_str.c_str());
+    if (denominator_ == 0) {
+      throw std::invalid_argument("Denominator cannot be zero");
+    }
+    simplify();
+    return;
+  }
+
+  auto dot_pos = s.find('.');
+  if (dot_pos != std::string::npos) {
+    std::string int_part = s.substr(0, dot_pos);
+    std::string frac_part = s.substr(dot_pos + 1);
+
+    std::string num_str = int_part + frac_part;
+    bigint num(num_str.c_str());
+    bigint den = bigint(1);
+    for (size_t i = 0; i < frac_part.size(); ++i) {
+      den *= 10;
+    }
+
+    numerator_ = num;
+    denominator_ = den;
+    simplify();
+    return;
+  }
+
+  numerator_ = bigint(s.c_str());
+  denominator_ = bigint(1);
+}

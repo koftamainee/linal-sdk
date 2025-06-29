@@ -32,6 +32,16 @@ class Solver {
   void solve_span_dimension(std::string const& data);
   void solve_vector_in_span(std::string const& data);
 
+  void solve_line2D_equasions(std::string const& data);
+  void solve_line2D_intersection(std::string const& data);
+  void solve_distance_point_to_line(const std::string& data);
+  void solve_distance_between_parallel_lines(const std::string& data);
+  void solve_area_triangle_with_axes(const std::string& data);
+  void solve_angle_between_lines(const std::string& data);
+  void solve_line_segment_intersection(const std::string& data);
+  void solve_distance_point_to_segment(const std::string& data);
+  void solve_segment_segment_intersection(const std::string& data);
+
  public:
   Solver();
 

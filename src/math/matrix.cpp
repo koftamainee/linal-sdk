@@ -6,6 +6,7 @@
 #include <string>
 
 #include "latex_writter.h"
+#include "vector.h"
 
 namespace {
 
@@ -70,10 +71,9 @@ Matrix::Matrix(const std::string& str) {
     std::string row_str = token.substr(start + 1);
     std::istringstream row_stream(row_str);
     std::vector<bigfloat> row;
-    bigint value;  // TODO FIXME (implement string constructor in bigfloat
-                   // correctly)
-    while (row_stream >> value) {
-      row.emplace_back(value);
+    std::string input;
+    while (row_stream >> input) {
+      row.emplace_back(input);
     }
 
     if (!row.empty()) {
@@ -678,12 +678,106 @@ size_t Matrix::rank() const {
   return rank;
 }
 
-std::vector<bigfloat> Matrix::eigenvalues() const {
-  throw std::runtime_error("Eigenvalue computation not implemented");
+std::vector<bigfloat> Matrix::eigenvalues(bigfloat const& EPS) const {
+  check_square("eigenvalues");
+  auto& writter = LatexWriter::get_instance();
+
+  const size_t n = rows_;
+  Matrix A = *this;
+  const size_t MAX_ITER = 100;
+
+  writter.add_solution_step("Eigenvalues",
+                            R"(Initial\ matrix:\\ )" + A.to_latex());
+
+  for (size_t iter = 0; iter < MAX_ITER; ++iter) {
+    // QR decomposition: A = Q * R
+    std::vector<Vector> Q_vectors;
+    for (size_t i = 0; i < n; ++i) {
+      Vector v(n);
+      for (size_t j = 0; j < n; ++j) {
+        v[j] = A.at(j, i);
+      }
+      Q_vectors.push_back(v);
+    }
+
+    Q_vectors = Vector::gram_schmidt_process(Q_vectors, EPS);
+
+    Matrix Q(n, n);
+    for (size_t i = 0; i < n; ++i) {
+      for (size_t j = 0; j < n; ++j) {
+        Q.at(j, i) = Q_vectors[i][j];
+      }
+    }
+
+    Matrix R = Q.transpose() * A;
+    A = R * Q;
+
+    writter.add_solution_step(
+        "Eigenvalues - Iteration " + std::to_string(iter + 1),
+        "Q:\\\\ " + Q.to_latex() + R"(\\ R:\\ )" + R.to_latex() +
+            R"(\\ A_{next} = R \cdot Q:\\ )" + A.to_latex());
+
+    bigfloat off_diagonal = 0;
+    for (size_t i = 0; i < n; ++i) {
+      for (size_t j = 0; j < n; ++j) {
+        if (i != j) {
+          off_diagonal += A.at(i, j).abs();
+        }
+      }
+    }
+
+    if (off_diagonal < EPS) {
+      writter.add_solution_step("Eigenvalues",
+                                R"(Converged\ matrix:\\ )" + A.to_latex());
+      break;
+    }
+  }
+
+  std::vector<bigfloat> result(n);
+  for (size_t i = 0; i < n; ++i) {
+    result[i] = A.at(i, i);
+  }
+
+  return result;
 }
 
-std::vector<std::vector<bigfloat>> Matrix::eigenvectors() const {
-  throw std::runtime_error("Eigenvector computation not implemented");
+std::vector<Vector> Matrix::eigenvectors(bigfloat const& EPS) const {
+  std::vector<bigfloat> eigvals = eigenvalues();
+  std::vector<Vector> eigvecs;
+  const size_t n = rows_;
+  const size_t MAX_ITER = 50;
+
+  for (const bigfloat& lambda : eigvals) {
+    Matrix shifted = *this;
+    for (size_t i = 0; i < n; ++i) {
+      shifted.at(i, i) -= lambda;
+    }
+
+    Vector x(n);
+    for (size_t i = 0; i < n; ++i) {
+      x[i] = bigfloat(1);
+    }
+
+    for (size_t iter = 0; iter < MAX_ITER; ++iter) {
+      std::vector<bigfloat> b(n);
+      for (size_t i = 0; i < n; ++i) {
+        b[i] = x[i];
+      }
+      b = shifted.solve_gauss_jordan(b);
+      Vector new_x(b);
+
+      new_x = new_x.normalize(EPS);
+
+      if ((new_x - x).norm() < EPS) {
+        break;
+      }
+      x = new_x;
+    }
+
+    eigvecs.push_back(x.normalize(EPS));
+  }
+
+  return eigvecs;
 }
 
 size_t Matrix::span_dimension(
@@ -734,4 +828,23 @@ bool Matrix::is_in_span(const std::vector<std::vector<bigfloat>>& basis,
   } catch (std::exception const& e) {
     return false;
   }
+}
+
+Matrix Matrix::transpose() const {
+  Matrix result(cols_, rows_);
+  auto& writter = LatexWriter::get_instance();
+
+  writter.add_solution_step("Transpose",
+                            R"(Original\ matrix:\\ )" + to_latex());
+
+  for (size_t i = 0; i < rows_; ++i) {
+    for (size_t j = 0; j < cols_; ++j) {
+      result.at(j, i) = at(i, j);
+    }
+  }
+
+  writter.add_solution_step("Transpose",
+                            R"(Transposed\ matrix:\\ )" + result.to_latex());
+
+  return result;
 }

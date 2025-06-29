@@ -490,11 +490,16 @@ std::vector<Vector> Vector::gram_schmidt_process(
                                     std::to_string(i + 1) +
                                     "}\\) to obtain orthonormal vector:",
                                 u_norm.to_latex());
-    } else {
+    }
+
+    else {
+      Vector zero_vector = Vector::zero(vectors[i].dimension());
+      ortho_basis.push_back(zero_vector);
+
       writter.add_solution_step(
           "Vector \\(\\vec{v}_{" + std::to_string(i + 1) +
-              "}\\) is linearly dependent and is discarded.",
-          "");
+              "}\\) is linearly dependent and replaced with a zero vector.",
+          zero_vector.to_latex());
     }
   }
 
@@ -527,19 +532,51 @@ Vector Vector::basis_vector(size_t dimension, size_t index) {
 
 bigfloat angle_between(const Vector& a, const Vector& b, const bigfloat& EPS) {
   a.check_dimension(b.dimension(), "angle_between");
+
+  auto* writter = &LatexWriter::get_instance();
+
+  writter->add_solution_step("Check zero vectors",
+                             R"(\text{Vector } a \text{ is zero: } )" +
+                                 std::string(a.is_zero() ? "true" : "false") +
+                                 R"(, \text{Vector } b \text{ is zero: } )" +
+                                 std::string(b.is_zero() ? "true" : "false"));
+
   if (a.is_zero() || b.is_zero()) {
     throw std::domain_error("Angle with zero vector is undefined");
   }
 
   const bigfloat dot_product = a.dot(b);
-  const bigfloat norms_product = a.norm() * b.norm();
+  writter->add_solution_step(
+      "Dot product calculation",
+      R"(\vec{a} \cdot \vec{b} = )" + dot_product.to_decimal());
+
+  const bigfloat norm_a = a.norm();
+  const bigfloat norm_b = b.norm();
+  writter->add_solution_step("Norms calculation",
+                             R"(\|\vec{a}\| = )" + norm_a.to_decimal() +
+                                 R"(, \|\vec{b}\| = )" + norm_b.to_decimal());
+
+  const bigfloat norms_product = norm_a * norm_b;
+  writter->add_solution_step(
+      "Product of norms",
+      R"(\|\vec{a}\| \times \|\vec{b}\| = )" + norms_product.to_decimal());
 
   if (norms_product < EPS) {
     throw std::domain_error("Vectors too small for angle calculation");
   }
 
   const bigfloat cos_theta = dot_product / norms_product;
-  return arccos(cos_theta, EPS);
+  writter->add_solution_step(
+      "Cosine of angle",
+      R"(\cos\theta = \frac{\vec{a} \cdot \vec{b}}{\|\vec{a}\| \|\vec{b}\|} = )" +
+          cos_theta.to_decimal());
+
+  bigfloat angle = arccos(cos_theta, EPS);
+  writter->add_solution_step(
+      "Angle calculation",
+      R"(\theta = \arccos(\cos\theta) = )" + angle.to_decimal());
+
+  return angle;
 }
 
 bool are_orthogonal(const Vector& a, const Vector& b) {
@@ -596,11 +633,18 @@ std::string Vector::to_latex() const {
 }
 
 Vector::Vector(std::string const& str) {
-  std::stringstream in(str);
-  while (!in.eof()) {
-    std::string num;
-    in >> num;
-    bigfloat number(bigint(num.c_str()));  // TODO fixme, input may be fraction
-    components_.push_back(std::move(number));
+  std::string cleaned = str;
+
+  size_t start = cleaned.find('(');
+  size_t end = cleaned.rfind(')');
+
+  if (start != std::string::npos && end != std::string::npos && start < end) {
+    cleaned = cleaned.substr(start + 1, end - start - 1);
+  }
+
+  std::stringstream in(cleaned);
+  std::string num;
+  while (in >> num) {
+    components_.emplace_back(num);
   }
 }

@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "core/bigfloat.h"
+#include "vector.h"
 
 class Matrix {
  private:
@@ -39,15 +40,21 @@ class Matrix {
 
   bigfloat determinant() const;
   Matrix inverse() const;
-
+  Matrix transpose() const;
   std::vector<bigfloat> solve_gauss(std::vector<bigfloat> const& b) const;
   std::vector<bigfloat> solve_gauss_jordan(
       std::vector<bigfloat> const& b) const;
 
-  std::vector<bigfloat> eigenvalues() const;
-  std::vector<std::vector<bigfloat>> eigenvectors() const;
+  std::vector<bigfloat> eigenvalues(
+      bigfloat const& EPS = bigfloat::DEFAULT_EPS) const;
+  std::vector<Vector> eigenvectors(
+      bigfloat const& EPS = bigfloat::DEFAULT_EPS) const;
 
   size_t rank() const;
+
+  Vector nullspace_vector(const bigfloat& EPS) const;
+
+  Vector operator*(const Vector& vec) const;
 
   static size_t span_dimension(
       const std::vector<std::vector<bigfloat>>& vectors);

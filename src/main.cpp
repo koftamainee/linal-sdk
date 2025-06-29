@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
   s.close();
 
   std::string compile_command =
-      "pdflatex -interaction=nonstopmode > /dev/null " + tex_file;
+      "xelatex -interaction=nonstopmode > /dev/null " + tex_file;
   int compile_result = system(compile_command.c_str());
 
   if (compile_result != 0) {
@@ -53,8 +53,8 @@ int main(int argc, char** argv) {
 
   try {
     // fs::remove(tex_file);
-    // fs::remove(base_name + "-solved.aux");
-    // fs::remove(base_name + "-solved.log");
+    fs::remove(base_name + "-solved.aux");
+    fs::remove(base_name + "-solved.log");
   } catch (const fs::filesystem_error& e) {
     std::cerr << "Warning: Could not clean up temporary files: " << e.what()
               << "\n";
