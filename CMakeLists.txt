@@ -19,6 +19,14 @@ include_directories(
   ${PROJECT_SOURCE_DIR}/include/math ${PROJECT_SOURCE_DIR}/include/solver
   ${PROJECT_SOURCE_DIR}/include/writer)
 
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+  set(CMAKE_CXX_FLAGS_RELEASE
+      "-O3 -march=native -flto -funroll-loops -fomit-frame-pointer -ffast-math -fno-rtti"
+  )
+  set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+
+endif()
+
 file(
   GLOB_RECURSE
   SOURCES

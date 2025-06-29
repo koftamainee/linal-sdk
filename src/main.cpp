@@ -62,9 +62,10 @@ int main(int argc, char** argv) {
               << "\n";
   }
   try {
-    // fs::remove(tex_file);
+    fs::remove(tex_file);
     fs::remove(base_name + "-solved.aux");
     fs::remove(base_name + "-solved.log");
+    fs::remove("indent.log");
   } catch (const fs::filesystem_error& e) {
     std::cerr << "Warning: Could not clean up temporary files: " << e.what()
               << "\n";
